@@ -1,0 +1,284 @@
+<div class="row">
+  <div class="col-sm-6 col-xs-12" style="margin-left:0.5%">
+    <h1 class="h3 m-0">Transfer Order</h1>
+    <small class="text-muted breadcrumb">
+      <a routerLink="/Warehouse">Warehouse</a> »
+      Stock Transfer » <a routerLink="/TransferOrder">Transfer Order</a> » <a routerLink="/CreateTo">Create Transfer Order</a></small>
+  </div>
+  <div class="card" style="min-height:550px;margin-right:40px;margin-top:1%;width:96%;margin-left:20px">
+    <h4 class="card-title" style="color: green;padding:2%">Create Transfer Order</h4>
+  <form>
+    <div class="form-row">
+      <div class="form-group col-md-4">
+        <label for="city">
+          <span style="color: red">*</span>Transfer Type</label>
+        <select class="form-control" id="transfer" (change)="transfertype($event.target.value)">
+          <option value="" disabled selected>Select Transfer Type</option>
+          <option value="1">Warehouse to Location</option>
+          <option value="2">Location to Warehouse</option>
+          <option value="3">Warehouse to Warehouse</option>
+          <option value="4">Location to Location</option>
+        </select>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="from">
+          <span style="color: red">*</span>From</label>
+        <select class="form-control" name="fromlocation" #fromlocation='ngModel' required [(ngModel)]='formdata.fromlocation' (click)='fromDropdownLocation($event)'>
+          <option value="" disabled selected>{{fromLocation}}</option>
+          <option *ngFor="let data of from" value="{{data.id}}">{{data.name}}</option>
+        </select>
+        <span *ngIf="fromlocation.invalid && (fromlocation.dirty || fromlocation.touched)">
+          <span *ngIf="fromlocation.errors.required" style="color:red; position:absolute;
+          top: 66px;">
+            Select a Location.
+          </span>
+        </span>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="to">
+          <span style="color: red">*</span>To</label>
+        <select class="form-control" id="to" name="tolocation" #tolocation='ngModel' required [(ngModel)]='formdata.tolocation' (change)='toDropdownLocation($event)'>
+          <option value="" disabled selected>{{toLocation}}</option>
+          <option *ngFor="let data of to" value="{{data.id}}">{{data.name}}</option>
+        </select>
+        <span *ngIf="tolocation.invalid && (tolocation.dirty || tolocation.touched)">
+          <span *ngIf="tolocation.errors.required" style="color:red; position:absolute;
+          top: 66px;">
+            Select a Location.
+          </span>
+        </span>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group  col-md-4">
+        <label for="Date">
+          <span style="color: red">*</span>Date</label> 
+        <input type="text" class="form-control" value="{{date | date: 'dd MMM, yyyy'}}">
+        <!-- <span *ngIf="expdate.invalid && (expdate.dirty || expdate.touched)">
+          <span *ngIf="expdate.errors.required" style="color:red; position:absolute;
+          top: 66px;">
+            Date is required..
+          </span>
+        </span> -->
+      </div>
+      <div class="form-group col-md-4">
+        <label for="TotalQuantity">Total Quantity</label>
+        <input type="number" class="form-control" id="TotalQuantity" disabled>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="Amount">Amount</label>
+        <input type="text" class="form-control" id="Amount" disabled>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="Number Of Boxes">
+          <span style="color: red">*</span>No Of Boxes</label>
+        <input type="number" min=1 oninput="validity.valid||(value='');" #boxes='ngModel' [(ngModel)]='formdata.boxes' required name='boxes'
+          class="form-control" id="boxes">
+        <span *ngIf="boxes.invalid && (boxes.dirty || boxes.touched)">
+          <span *ngIf="boxes.errors.required" style="color:red; position:absolute;
+          top: 66px;">
+            Number of Boxes is required and should be valid.
+          </span>
+        </span>
+      </div>
+      <div class="form-group col-md-8">
+        <label for="Remarks">
+          <span style="color: red">*</span>Remarks</label>
+        <input type="text" #remarks='ngModel' [(ngModel)]='formdata.remarks' required name='remarks' class="form-control" id="remarks">
+        <span *ngIf="remarks.invalid && (remarks.dirty || remarks.touched)">
+          <span *ngIf="remarks.errors.required" style="color:red; position:absolute;
+          top: 66px;">
+            Remarks is required.
+          </span>
+        </span>
+      </div>
+    </div>
+
+    <div class="clearfix"></div>
+    <div class="form-group">
+      <div class="col-sm-10 text-center">
+        <button type="button" class="btn btn-raised btn-dark" (click)='back()'>Back</button>&nbsp;&nbsp;
+        <button type="submit" class="btn btn-raised btn-success" data-toggle="modal" data-target="#myModal" (click)='addProduct(remarks.value,boxes.value,fromlocation.value,tolocation.value)'>
+          Add product
+          <div class="ripple-container"></div>
+        </button>
+      </div>
+    </div>
+  </form>
+  <div *ngIf="show3" class="container selecteditem" style="margin-top:140px">
+    <h4>Selected Item</h4>
+
+    <table class="table-bordered table" style="width:877px;">
+      <thead>
+        <tr>
+          <th>HSN</th>
+          <th>Name</th>
+          <th>MRP</th>
+          <th>Qty</th>
+          <th>Stock</th>
+          <th>Amt &nbsp;(₹)</th>
+          <th>Base</th>
+          <th>Reason</th>
+          <th>Exp Date</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let items of submitfinalresponse;let i=index">
+          <td>{{items.hsncode}}</td>
+          <td id="{{items.id}}">{{items.name}}</td>
+          <td>{{items.price}}</td>
+          <td>
+            <input type="number" min=1 oninput="validity.valid||(value='');" style="width:40px;" id="{{'poc'+i}}" name="{{items.quantity}}"
+              [(ngModel)]="items.quantity" (keyup)='Updatevalue($event)' (change)='changeQuantity($event,items)'>
+          </td>
+          <td>{{items.customStock}}</td>
+          <td id="{{'pop'+i}}">{{((items.quantity)*(items.price))|number}}</td>
+          <td>{{items.basePrice}}</td>
+          <td>{{items.reason}}</td>
+          <td>{{items.showDate}}</td>
+          <td>
+            <a (click)="removeitem(items.id)">
+              <i class="fa fa-trash" style="color: red" aria-hidden="true"></i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <button class="btn btn-raised btn-success" (click)="submitTO(fromlocation.value,tolocation.value,boxes.value,remarks.value)"
+      data-toggle="tooltip" title="create to">Create TO</button>
+    <button class="btn btn-raised  btn-danger" (click)="back()">Cancel</button>
+  </div>
+</div>
+<ul class="footer" style="position:fixed; margin-top: 4%">
+  <li class="pull-left">Copyright &copy; 2018 Limitless Mobility Solutitons Pvt Ltd. All rights reserved.</li>
+  <li class="pull-right" style=" margin-left: 570px;">Powered by <a href="http://zoneonedigital.com/" target="_blank">Zone One Digital</a></li>
+</ul>
+
+<div *ngIf='modal' id="myModal" class="modal fade " style="position: fixed;
+   top: 0;
+   right: 0;
+   bottom: 0;
+   left: -300px;
+  " role="dialog">
+  <div class="modal-dialog modal-lg" style=" border-radius: 10px">
+
+    <!-- Modal content-->
+    <div class="modal-content" style="width:140%">
+      <div class="modal-header" style="background-color: #f3903f;border-top-right-radius:10px;border-top-left-radius: 10px">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">
+          <b>Add Product</b>
+        </h4>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="toSearchList(fromlocation.value,tolocation.value,name.value)">
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="name">Name</label>
+              <input #name type="text" class="form-control" id={{searchresultid}} (keypress)="auto($event)" value="{{searchresult}}">
+              <div *ngIf="searchvalue" class="autosearch" style="background-color:lightgray;z-index:100;position:absolute">
+                <ng-container *ngFor="let result of filteredresult">
+                  <label *ngIf="searchvalue" (click)="searchevent($event,fromlocation.value,tolocation.value,name.value)" attr.id="{{result.id}}" role="button">{{result.name}}</label>
+                  <br/>
+                </ng-container>
+              </div>
+            </div>
+            <div class="form-group col-md-6">
+              <button type="submit" class="btn btn-raised  btn-success" (click)="toggle1()">Search</button>&nbsp;&nbsp;
+              <button type="reset" class="btn btn-raised btn-dark" (click)="toggle2()">Reset</button>
+            </div>
+          </div>
+        </form>
+
+        <div *ngIf="show1" class="container selecteditem" style="margin-left: -18px; margin-top:100px;min-height:150px">
+          <h4>Searched Result</h4>
+
+          <table class="table-bordered">
+            <thead>
+              <tr style="padding:10px">
+                <th>
+                  <input type="checkbox" name="heading" (click)="checkbox($event)" />
+                </th>
+                <th style="width:120px">Name</th>
+                <th style="width:120px">Reason</th>
+                <th>Stock</th>
+                <th>Qty</th>
+                <th>Amt&nbsp;(₹)</th>
+                <th>MRP</th>
+                <th style="width:100px">Exp-Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let searchitems of nameresponse;let i=index">
+                <td>
+                  <input type="checkbox" [(checked)]="checkvalue" (click)="singlecheck($event,searchitems.id,searchitems.quantity,searchitems.reason)"
+                  />
+                </td>
+                <td>{{searchitems.name}}</td>
+                <select (change)='changeReason($event,searchitems)'>
+                  <option value="" disabled selected>Select the reason</option> -->
+                  <option value="Good Stock">Good Stock</option>
+                  <option value="Near Expiry">Nearly Expiry</option>
+                  <option value="Expired">Expired</option>
+                  <option value="Damaged">Damaged</option>
+                </select>
+                <td>{{searchitems.customStock}}</td>
+                <td>
+                  <input type="number" min=1 oninput="validity.valid||(value='');" style="width:40px;" name="searchitems.quantity"
+                    [(ngModel)]="searchitems.quantity" (change)='changeQuantity($event,searchitems)'> </td>
+                <td>{{((searchitems.price)*(searchitems.quantity))|number}}</td>
+                <td>{{searchitems.price}}</td>
+            <td><input type="date" min={{today}} [disabled]="searchitems.expiryDate" [(ngModel)]="searchitems.showDate"></td>
+              </tr>
+            </tbody>
+          </table>
+          <button class="btn btn-raised btn-success" style="position: fixed;
+          left: 640px;
+          top: 230px;" (click)="goselect($event)">>></button>
+        </div>
+      </div>
+      <div *ngIf="showselected" class="container selecteditem" style=" position: absolute;
+      top: 175px;
+      left: 700px;max-height:700px;overflow-y: scroll; 
+      ">
+        <h4>Selected Items</h4>
+
+        <table class="table-bordered" style="width:40%">
+          <thead>
+            <tr style="padding:20px">
+              <th style="width:120px;">Name</th>
+              <th style="width:120px;">Reason</th>
+              <th>MRP</th>
+              <th>Qty</th>
+              <th>Amt&nbsp;(₹)</th>
+              <th>#</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let searchitems of selectedfinalresponse;let i=index;">
+              <td>{{searchitems.name}}</td>
+              <td>
+                {{searchitems.reason}}
+              </td>
+              <td>{{searchitems.price}}</td>
+              <td>{{searchitems.quantity}}</td>
+              <td>{{((searchitems.price)*(searchitems.quantity))|number}}</td>
+              <td>
+                <a (click)="removeitem2(searchitems.id)">
+                  <i class="fa fa-trash" style="color: red" aria-hidden="true"></i>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-raised btn-default" data-dismiss="modal" (click)='close()'>Close</button>
+        <button type="button" class="btn btn-raised btn-success" data-dismiss="modal" (click)="selectbyname(name.value,date.value)">Submit</button>
+      </div>
+    </div>
+
+  </div>
+</div>

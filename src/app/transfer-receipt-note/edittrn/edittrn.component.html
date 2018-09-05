@@ -1,0 +1,263 @@
+<div class="row">
+  <div class="col-sm-6 col-xs-12">
+    <h1 class="h3 m-0">Transfer Receipt Note</h1>
+    <small class="text-muted breadcrumb"><a routerLink="Warehouse">Warehouse</a> » Stock Transfer » <a routerLink="TransferReceiptNote">Transfer Receipt Note</a> » <a routerLink="manageTRN">Manage Transfer Receipt Note</a></small>
+    <br/><br/>
+  </div>
+</div>
+<div class="boxs">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="boxs-body">
+        
+            <div class="form-row">
+                <h4 class="card-title" style="color: green;padding:2%;margin-left:-1%">Edit Transfer Receipt Note</h4>
+
+                <div class="form-group  col-md-3" style="padding-bottom:0px">
+                      <label for="PoDate">TRN Date</label>
+                      <input type="text" disabled class="form-control" value="{{responseModel.date |date: 'dd MMM, yyyy'}}" >
+                </div>
+                <div class="form-group col-md-3" style="padding-bottom:0px">
+                  <label for="trnCode">TRN Code</label>
+                  <input type="text" disabled class="form-control" value="{{responseModel.code}}" disabled/>
+  
+              
+                  
+                </div>
+                <div class="form-group col-md-3" style="padding-bottom:0px">
+                  <label for="toCode">Transfer Order Id</label>
+                  <input type="text" name="toCode" class="form-control"value="{{responseModel.transferOrderCode}}" disabled/>
+                </div>
+
+                <div class="form-group col-md-3" style="padding-bottom:0px">
+                    <label for="status">TRN Status</label>
+                    <input type="text" name="status" class="form-control"value="{{responseModel.status==1?'open':responseModel.status==3?'closed':'released'}}" disabled/>
+                  </div>
+                
+              </div>
+              <div class="form-row">
+                  <div class="form-group  col-md-3" style="padding-bottom:0px">
+                      <label for="From">From</label>
+                      <input type="text" disabled class="form-control" value="{{responseModel.fromWHName}}" >
+                </div>
+                <div class="form-group  col-md-3" style="padding-bottom:0px">
+                    <label for="to">To</label>
+                    <input type="text" disabled class="form-control" value="{{responseModel.toWHName}}" >
+              </div>
+              <div class="form-group  col-md-3" style="padding-bottom:0px">
+                  <label for="PoDate">Total Quantity</label>
+                  <input type="text" disabled class="form-control" value="{{trnTotalQuantity}}" >
+            </div>
+            <div class="form-group  col-md-3" style="padding-bottom:0px">
+                <label for="PoDate">Total Amount</label>
+                <input type="text" disabled class="form-control" value="{{trnTotalAmount}}" >
+          </div>
+              </div>
+              <div class="form-row">
+                   <div class="form-group col-md-3" style="padding-bottom:0px">
+                     <label for="boxes">No Of Boxes</label>
+                     <input type="text"  class="form-control" value="{{responseModel.boxCount}}" >
+                   </div>
+                   <div class="form-group col-md-3" style="padding-bottom:0px">
+                    <label for="boxes">Remarks</label>
+                    <input type="text"  class="form-control" value="0">
+                  </div>
+                    <div *ngIf="released" class="form-group col-md-3">
+                      <label>
+                        Released By
+                      </label>
+                      <input type="text" class="form-control" value="{{releaseBy}}" disabled>
+                    </div>
+                    <div *ngIf="released" class="form-group col-md-3">
+                      <label>
+                        Released On
+                      </label>
+                      <input type="text" class="form-control" value="{{releaseDate | date:'dd/MM/yyyy'}}" disabled>
+                    </div>
+
+            
+              </div>
+              <div class="form-group col-md-12" style="text-align: center;padding-bottom:0px;">
+                       <button *ngIf="!released" class="btn btn-raised btn-info" data-toggle="modal"  data-target="#productModal">Add Product</button>
+                       <button class="btn btn-raised btn-success"  (click)="release()">Release TRN</button>
+              </div>
+        
+       
+      
+      <div class="table-responsive" style="margin-top: 30%;">
+        <h4>TRN Details</h4>
+            <table class="table mb-0 table-striped">
+                  <thead>
+                     <tr class="bg-lightgray">
+                       <th class="text-darkgray">HSN</th>
+                       <th class="text-darkgray" style="width:20%">Name</th>
+                       <th class="text-darkgray">TO Qty</th>
+                       <th class="text-darkgray">MRP</th>
+                       <th class="text-darkgray">TAX</th>
+                      
+                       <th class="text-darkgray">Reason</th>
+                       <th class="text-darkgray">EXP Date</th>
+                       <th class="text-darkgray" style="width:20%">Qty</th>
+                       <th class="text-darkgray">Amount <i class="fa fa-inr"></i></th>
+                       <th>#</th>
+                       
+                     </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of trnItems ;let i=index"> 
+                      <td>{{item.hsnCode}}</td>
+                      <td>{{item.itemName}}</td>
+                      <td>{{item.toQuantity}}</td>
+                      <td>{{item.mrp}}</td>
+                      <td>{{item.gst}}</td>
+                      <td>{{item.reason}}</td>
+                      <td>{{item.expiryDate| date: 'dd MMM, yyyy'}}</td>
+                      <td><input type="number" min="1" oninput="validity.valid||(value='');" name="{{'qty'+i}}" [(ngModel)]="item.quantity" style="width:30%" (keyup)="changeTRNItemQuantity($event)" disabled="{{responseModel.status==3?true:false}}"/> </td>
+                      <td>{{item.mrp*item.quantity}}</td>
+                      <td><a (click)="notremove()"><i class="fa fa-trash" style="color: red" aria-hidden="true"></i></a></td>
+                    </tr>
+                  </tbody>
+            </table>
+            <div class="col-xs-12" style="text-align: center">
+                <button *ngIf="!released" class="btn btn-raised btn-info" (click)="submitTRN($event)">Save</button>&nbsp;
+                <button class="btn btn-raised btn-dark" (click)="back()">Back</button>&nbsp;
+            </div>
+      </div>
+      </div>
+      <!-- /boxs body -->
+    </div>
+  </div>
+</div>
+
+
+<!--Footer-->
+<ul class="footer">
+<li class="pull-left">Copyright &copy; 2018 Limitless Mobility Solutitons Pvt Ltd. All rights reserved.</li>
+<li class="pull-right">Powered by <a href="http://zoneonedigital.com/" target="_blank">Zone One Digital</a></li>
+</ul>
+
+
+<div *ngIf='modal' id="productModal" class="modal fade " style="position: fixed;
+   top: 0;
+   right: 0;
+   bottom: 0;
+   left: -26%;
+  " role="dialog">
+  <div class="modal-dialog modal-lg" style=" border-radius: 10px">
+
+    <!-- Modal content-->
+    <div class="modal-content" style="width:140%">
+      <div class="modal-header" style="background-color: #f3903f;border-top-right-radius:10px;border-top-left-radius: 10px">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">
+          <b>Add Product</b>
+        </h4>
+      </div>
+      <div class="modal-body">
+        <form >
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="name">Name</label>
+              <input #name type="text" class="form-control"  (keypress)="modalAutoComplete($event)" value="{{searchResult}}">
+              <div *ngIf="searchValue" class="autosearch" style="background-color:lightgray">
+                <ng-container *ngFor="let result of autoCompleteResultArray">
+                  <label *ngIf="searchValue" (click)="searchevent($event)" attr.id="{{result.id}}">{{result.name}}</label>
+                  <br/>
+                </ng-container>
+              </div>
+            </div>
+            <div class="form-group col-md-6">
+              <button type="submit" class="btn btn-raised  btn-success" (click)="searchItem()">Search</button>&nbsp;&nbsp;
+              <button type="reset" class="btn btn-raised btn-dark" (click)="toggle2()">Reset</button>
+            </div>
+          </div>
+        </form>
+
+        <div *ngIf="showSelectedItem" class="container selecteditem" style="margin-left: -18px; margin-top:100px;min-height:150px;width: 56%;">
+          <h4>Searched Result</h4>
+
+          <table class="table table-responsive table-striped" >
+            <thead>
+              <tr style="padding:10px">
+                <th>
+                  <input type="checkbox" name="heading"  (click)="checkbox($event)" />
+                </th>
+                <th style="width:120px">Name</th>
+                <th style="width:120px">Reason</th>
+                <th>Stock</th>
+                <th>Qty</th>
+                <th>Amt&nbsp;(₹)</th>
+                <th>MRP</th>
+                <th style="width:90px">Exp-Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let searchitems of modalSelectedArray;let i=index">
+                <td><input type="checkbox" [(checked)]="checkvalue" (click)="singlecheck($event,searchitems.id, searchitems.quantity,searchitems.reason,searchitems.customStock)"/></td>
+                <td>{{searchitems.name}}</td>
+               <td><select [(ngModel)]="searchitems.reason" (change)='changeReason($event,searchitems)'>
+                  <option value="" disabled selected>Select</option>
+                  <option value="OK">OK</option>
+                  <option value="Near Expiry">Near To Expiry</option>
+                  <option value="Expired">Expired</option>
+                  <option value="Damaged">Damaged</option>
+                </select></td>
+                <td>{{searchitems.customStock}}</td>  
+                 <td> <input type="number" min="1" oninput="validity.valid||(value='');" style="width:40px;" name="searchitems.quantity" [(ngModel)]="searchitems.quantity" (keyup)='changeQuantity($event,searchitems.customStock)'> </td>
+                <td>{{((searchitems.price)*(searchitems.quantity))|number}}</td>
+                <td>{{searchitems.price}}</td>
+                <td>
+                  <input [(ngModel)]="searchitems.expiryDate" type="date" [attr.disabled] = "expired ? 'disabled' : null" >
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <button class="btn btn-raised btn-success" style="position: fixed;
+          left: 680px;
+          top: 215px;" (click)="goselect($event)">>></button>
+        </div>
+      </div>
+      <div *ngIf="showselected" class="container selecteditem" style=" position: absolute;
+      top: 175px;
+      left: 740px;max-height:700px;overflow-y: scroll; width: 100%; 
+      ">
+        <h4>Selected Items</h4>
+
+        <table class="table-bordered" style="width:40%">
+          <thead>
+            <tr style="padding:20px">
+              <th style="width:120px;">Name</th>
+              <th style="width:120px;">Reason</th>
+              <th>MRP</th>
+              <th>Qty</th>
+              <th>Amt&nbsp;(₹)</th>
+              <th>#</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let searchitem of selectedfinallist;let i=index;">
+              <td>{{searchitem.name}}</td>
+              <td> 
+              {{searchitem.reason}}
+              </td>
+              <td>{{searchitem.price}}</td>
+              <td ><input type="text" style="width:40px;" disabled name="searchitem.quantity" [(ngModel)]="searchitem.quantity" (keyup)="changeQuantity($event,searchitem.stockQ)" ></td>
+              <td>{{((searchitem.basePrice)*(searchitem.quantity)*(searchitem.conversion))|number}}</td>
+              <td>
+                <a (click)="removeitem(searchitems.id)">
+                  <i class="fa fa-trash" style="color: red" aria-hidden="true"></i>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-raised btn-default" data-dismiss="modal"(click)='close()'>Close</button>
+        <button type="button" class="btn btn-raised btn-success" data-dismiss="modal" (click)="selectbyname($event)">Submit</button>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,240 @@
+
+
+  
+               
+                <div class="row"> 
+                    <div class="col-sm-6 col-xs-12">
+                      <h1 class="h3 m-0">Product</h1>
+                      <small class="text-muted breadcrumb"><a href="#">Product Catalogue</a> » Product</small>
+                    </div>
+                    <div class="col-sm-6 col-xs-12 text-right">
+                      <button class="btn btn-raised btn-info pull-right " (click)="toggle()" >
+                        Filter
+                        <div class="ripple-container"></div>
+                      </button>
+                    </div>
+                  </div>
+               
+    
+                <!-- row -->
+                <!-- /row -->
+                <div class="boxs">
+                  <div class="row">
+                    <!-- /Filter Panel-->
+                    <div *ngIf="show">
+                      <div class="boxs-widget filter_block">
+                        <form id="filter">
+                          <div class="col-sm-3">
+    
+                            <label>Category:</label>
+                            <select class="form-control" #category> 
+                              <option value=" ">Select </option>
+                              <option *ngFor="let data of categoryName" value="{{data.id}}">{{data.name}}</option>
+                            </select>
+                          </div>
+    
+                          <div class="col-sm-3">
+                            <label>Brand:</label>
+                            <select class="form-control" #brand>
+                              <option value=" ">Select </option>
+                              <option *ngFor="let data of brandName" value="{{data.id}}">{{data.name}}</option>
+                            </select>
+                          </div>
+                          <!-- <div class="col-sm-3">
+                            <label>Vendor:</label>
+                            <select class="form-control" #vendor placeholder="select Country">
+                              <option value=" ">Select</option>
+                              <option *ngFor="let data of searchVendors" value="{{data.id}}">{{data.name}}</option>
+                            </select>
+                          </div>
+                          <div class="col-sm-3">
+                            <label>Warehouse :</label>
+                            <select class="form-control" #warehouse placeholder="select Country">
+                              <option value=" ">Select</option>
+                              <option *ngFor="let data of searchWarehouses" value="{{data.id}}">{{data.name}}</option>
+                            </select>
+                          </div> -->
+                          <div class="col-sm-3">
+                            <label>Status:</label>
+                            <select class="form-control" #status placeholder="select Country">
+                              <option value=" ">Select</option>
+                              <option value="1">Active</option>
+                              <option value="0">Inactive</option>
+                              <!-- <option value="4">Cancelled</option> -->
+                            </select>
+                          </div>
+                          <div class="col-sm-3">
+                            <label>Name:</label>
+                            <input type="text" #name class="form-control"/>
+                          </div>
+                          <div class="col-sm-3">
+                            <label>HSN Code:</label>
+                            <input type="text" #hsn class="form-control"/>
+                          </div>
+    
+                          <div class="clearfix"></div>
+                          <div class="form-group">
+                            <div class="col-sm-12 text-center">
+                              <button type="button" (click)="searchDetails(category.value,brand.value,name.value,status.value,hsn.value)" class="btn btn-raised btn-danger">
+                                Search
+                               </button>
+                              <button  class="btn btn-raised btn-default" (click)="resetfunction()">Reset</button>
+                            </div>
+                          </div>
+                        </form> 
+                        <div class="clearfix"></div>
+                        <hr />
+                      </div>
+                    </div>
+                    <!--End/.-->
+                    <div class="col-md-12">
+                      <div class="boxs-widget">
+                        <div class="row">
+                          <div class="col-md-6"> <a routerLink="addProduct" class="btn btn-success btn-raised" >Add New</a><a data-target="#importModal" data-toggle="modal" class="btn btn-warning btn-raised" >Import</a></div>
+                          <div class="col-md-6 text-right pagestatus">
+                            <small class="text-muted">
+                              Per page
+                              <select (change)="optionpage($event)"> 
+                                <option>10</option>
+                                <option>25</option>
+                                <option>50</option>
+                              </select>
+                              showing <strong class="text-darkgray">{{(pageNo*pageSize)-(pageSize-1)}}</strong> to <strong class="text-darkgray">{{pageNo*pageSize>=totalRecords?totalRecords:pageNo*pageSize}}</strong> of <strong class="text-darkgray">{{totalRecords}}</strong>
+                            </small>
+                          </div>
+                          <div class="clearfix"></div>
+                        </div>
+                      </div>
+                      <div class="boxs-body">
+                          <div class="table-responsive">
+                            <table class="table mb-0 table-striped" id="usersList">
+                              <thead>
+                                <tr class=" bg-lightgray">
+                                  <th class="text-darkgray">Name</th>
+                                  <th class="text-darkgray">Category</th>
+                                  <th class="text-darkgray">Brand</th>
+                                  <th class="text-darkgray">UOM</th>
+                                  <th class="text-darkgray">HSN Code</th>
+                                  <th class="text-darkgray">MRP</th>
+                                  <th class="text-darkgray">Status</th>
+                                  <th class="text-darkgray">Action</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr *ngFor="let product of productList">
+                                  <td>{{product.name}}</td>
+                                  <td>{{product.categoryName}}</td> 
+                                  <td>{{product.brandName}}</td>
+                                  <td>{{product.uomId}}</td>
+                                  <td>{{product.hsnCode}}</td>
+                                  <td>{{product.price|number:'0.2'}}</td>
+                                  <td>{{product.isActive==1?'Active':'Inactive'}}</td>
+                                  <td width="150px"><a role="button" class="p-5 text-blue" [routerLink]="['editProduct', product.id]"><i class="fa fa-pencil-square-o" title="Click here to Edit" aria-hidden="true" style="font-size: 20px"></i></a> <a role="button"  class= "{{product.isActive == 1?'p-5 text-blush':'p-5 text-green'}}" (click)="changeStatus(product.id)"><i class= "{{product.isActive == 1?'fa fa-window-close-o ':'fa fa-check-square-o'}}" aria-hidden="true"  title="Click here to {{product.isActive == 1?'Deactivate':'Activate'}}" style="font-size:20px"></i></a></td>
+                                </tr>
+                              
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      <!-- /boxs body -->
+                      <!-- boxs footer -->
+                      <div class="boxs-footer dvd dvd-top">
+                        <div class="row">
+                          <div class="col-md-12 text-right">
+                            <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+                 
+                              <li [ngClass]="{disabled:pager.currentPage === 1}">
+                                <a (click)="setPage(pager.currentPage - 1)"> <i class="fa fa-chevron-left"></i></a>
+                              </li>
+                              <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                                <a (click)="setPage(page)">{{page}}</a>
+                              </li>
+                              <li>
+                                <button class="button" [ngClass]="{'disabled':pager.currentPage === pager.totalPages}" [disabled]="pager.currentPage === pager.totalPages" style="min-height: 5px !important" (click)="setPage(pager.currentPage + 1)"> <i class="fa fa-chevron-right"></i></button>
+                              </li>
+    
+                            </ul>
+                          </div>
+                          </div></div>
+                          <!-- /boxs footer -->
+                        </div>
+                      </div>
+                    </div>
+
+<!-- row -->
+<!-- /row -->
+
+<ul class="footer" >
+    <li class="pull-left">Copyright &copy; 2018 Limitless Mobility Solutitons Pvt Ltd. All rights reserved.</li>
+    <li class="pull-right">Powered by <a href="http://zoneonedigital.com/" target="_blank">Zone One Digital</a></li>
+</ul>
+
+<!-- Import Modal  -->
+<div class="modal fade" id="importModal" role="dialog" data-dismiss="modal" #closeBtn1>
+  <div class="modal-dialog">
+    <!-- Import Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+        <h4 class="modal-title">Import Product</h4>
+      </div>
+      <div class="modal-body">
+        <div>
+          <label style="color:black; font-weight: bold;">
+            <span style="color:red;">*</span> Choose Excel File (.xls or .xlsx files only. Product Name should be unique.): </label>
+
+          <form enctype="multipart/form-data">
+            <input type="file" class="form-control" #fileInput style="text-align:center;width:100%; background-color:white;height:25%"
+            />
+            <br />
+          </form>
+          <label>For downloading the Excel format</label>&nbsp;&nbsp;
+          <a style="font-weight: bold" href="../../assets/SampleProduct.xls"
+            download="SampleProduct.xls">Click here</a>
+        </div>
+        <div class="modal-footer">
+          <div class="col-md-12">
+            <button type="submit" class="btn btn-success btn-raised" (click)="importAsXLSX()">Upload</button>
+            <button type="reset" class="btn btn-raised btn-warning" data-dismiss="modal">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Upload Modal  -->
+<div class="modal fade" id="uploadPopUp" role="dialog" data-dismiss="modal">
+  <div class="modal-dialog">
+    <!-- Import Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+        <h4 class="modal-title">Upload Product</h4>
+      </div>
+      <div class="modal-body">
+        <div>
+          <label style="color:black; font-weight: bold;">
+            <span style="color:red;">*</span> Choose Excel File (.xls or .xlsx files only.): </label>
+
+          <form enctype="multipart/form-data">
+            <input type="file" class="form-control" #fileInput style="text-align:center;width:100%; background-color:white;height:25%"
+            />
+            <br />
+          </form>
+          <label>For downloading the Excel format</label>&nbsp;&nbsp;
+          <a style="font-weight: bold" >Click here</a>
+        </div>
+        <div class="modal-footer">
+          <div class="col-md-12">
+            <button type="submit" class="btn btn-success btn-raised">Upload</button>
+            <button type="reset" class="btn btn-raised btn-warning" data-dismiss="modal">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+</div>

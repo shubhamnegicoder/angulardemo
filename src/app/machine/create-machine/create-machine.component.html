@@ -1,0 +1,108 @@
+<div class="col-sm-6 col-xs-12" style="margin-left:-12px">
+    <h1 class="h3 m-0">Maintain Machine</h1>
+    <small class="text-muted breadcrumb">
+      <a routerLink="/Machine">Machine</a> »
+       <a routerLink="/addMachine">Add Machine</a></small>
+  </div>
+<div class="card" style="min-height:550px;margin-right:20px;margin-top:1%;width:100%;margin-left:-5px">
+    <h4 class="card-title" style="color: green;padding:1%">Create Machine</h4>
+    <!-- <label class="switch" data-toggle="tooltip" title="Spacial PO" style="position:absolute;
+    top: 18px;
+    right: 19px;">
+        <input type="checkbox" #check>
+        <span class="slider round"></span>
+    </label> -->
+    <label style=
+    "color:black;
+    position: absolute;
+    top: 52px;
+    right:22px;font-weight:normal">(<span style="color:red">*</span>)indicates mandatory fields</label>
+    <form #creatpoform="ngForm" (ngSubmit)="createMachine()">
+      <div class="form-row">
+        <div class="form-group  col-sm-4">
+              <label for="name"><span style="color: red">*</span>Name:</label>
+              <input type="text"  class="form-control"  id="name" name="name" [(ngModel)]="dataForMachineCreation.name" #name="ngModel" required>
+        </div>
+
+        <div class="form-group  col-sm-4">
+            <label for="Address1">Address1:</label>
+            <input type="text"  class="form-control" value="" id="address1" name="address1" [(ngModel)]="dataForMachineCreation.address1" #address1="ngModel">
+      </div>
+
+      <div class="form-group  col-sm-4">
+          <label for="Address2">Address2:</label>
+          <input type="text"  class="form-control" value="" id="address2" name="address2" [(ngModel)]="dataForMachineCreation.address2" #address2="ngModel">
+    </div>
+
+ 
+
+  <div class="form-group col-sm-4">
+      <label for="country"><span style="color: red">*</span>Country</label>
+      <select class="form-control" id="country"  [(ngModel)]="dataForMachineCreation.countryId" #countryId="ngModel" required  (change)="countrySelector($event)" name="countryId" >
+        <option value=""  selected>Select Country</option>
+        <option *ngFor="let data of countryList" value="{{data.id}}">{{data.name}}</option>
+      </select>
+    </div>
+
+  <div class="form-group col-sm-4">
+      <label for="state"><span style="color: red">*</span>State</label>
+      <select class="form-control" id="state"  [(ngModel)]="dataForMachineCreation.regionId" #stateId="ngModel" required  (change)="stateSelector($event)" name="stateId" >
+        <option value=""  selected>Select State</option>
+        <option *ngFor="let data of stateList" value="{{data.id}}">{{data.name}}</option>
+      </select>
+    </div>
+
+        <div class="form-group col-sm-4">
+          <label for="city"><span style="color: red">*</span>City</label>
+          <select class="form-control" id="city"  [(ngModel)]="dataForMachineCreation.cityId" #cityId="ngModel" required  (change)="cityselector($event)" name="cityId" >
+            <option value="" disabled selected>Select City</option>
+            <option *ngFor="let data of cityList" value="{{data.id}}">{{data.name}}</option>
+          </select>
+      
+        </div>
+        <div class="form-group col-sm-4">
+          <label for="Warehouse"><span style="color: red">*</span>Warehouse</label>
+          <select  [(ngModel)]="dataForMachineCreation.warehouseId"  name="whId"  id="whId"  #whId="ngModel" required  class="form-control">
+            <option value="" disabled selected>Select Warehouse</option>
+            <option *ngFor="let data of warehouseList" value="{{data.id}}">{{data.name}}</option>
+          </select>
+      
+        </div>
+
+        <div class="form-group  col-sm-4">
+            <label for="POBox">POBox:</label>
+            <input type="text"  class="form-control" value="" id="poBox" name="poBox"  [(ngModel)]="dataForMachineCreation.poBox" #poBox="ngModel">
+      </div>
+
+      <div class="form-group  col-sm-4">
+          <label for="phoneNum">Phone:</label>
+          <input type="text"  class="form-control" value="" id="phone" name="phone" [(ngModel)]="dataForMachineCreation.phone" #phone="ngModel">
+    </div>
+      </div>
+     
+      <div class="form-group">
+          <div class="col-md-12 text-center" style="margin-top: 60px">
+              <button type="submit" class="btn btn-success btn-raised">Save</button>
+              <button type="button" class="btn btn-raised btn-warning" (click)="goBack()">Back</button>
+             
+          </div>
+      </div>
+    </form>
+ 
+</div>
+<ul class="footer" style="position:fixed; margin-top: 45%">
+  <li class="pull-left">Copyright &copy; 2018 Limitless Mobility Solutitons Pvt Ltd. All rights reserved.</li>
+  <li class="pull-right" style="margin-left: 568px">Powered by <a href="http://zoneonedigital.com/" target="_blank">Zone One Digital</a></li>
+</ul>
+
+      <!-- modal for PO -->
+
+  
+
+  
+
+
+
+
+
+

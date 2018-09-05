@@ -1,0 +1,35 @@
+<div id="controls">
+  <aside id="leftmenu">
+    <div id="leftmenu-wrap">
+      <div class="panel-group slim-scroll" role="tablist">
+        <div class="panel panel-default">
+          <div id="leftmenuNav" class="panel-collapse collapse in" role="tabpanel">
+            <div class="panel-body">
+
+              <!--  NAVIGATION Content -->
+              <div class="head mt-10"><i class="fa fa-map-o" aria-hidden="true"></i> <span>{{selectedModuleTitle}}</span></div>
+              <ul class="left_menu pb-20 ">
+                <li *ngFor="let item of sideBarModules;let i=index" [ngClass]="item.module==selectedModulee?'active':''">
+                  <span *ngIf="item.childrenss.length==0">
+                    <a routerLink="{{item.action}}" (click)="focusMe(item.module)">{{item.module}}</a>
+                  </span>
+                  <div *ngIf="item.childrenss.length!=0">
+                    <a (click)="toggleMenu(item.module)" role="button">{{item.module}}</a>
+                    
+                    <div id="{{item.module+'_id'}}" class="hideChild">
+                    <ul>
+                      <li *ngFor="let menu1 of item.childrenss" [ngClass]="menu1.module==selectedModulee?'active':''" style='margin-left:-30%'><a routerLink="{{menu1.action}}" (click)="focusMe(menu1.module)">{{menu1.module}}</a></li>
+                    </ul>
+                    </div>
+                  </div>
+
+                  </li>
+              </ul>
+              <!--/ NAVIGATION Content -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+</div>

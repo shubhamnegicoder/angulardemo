@@ -1,0 +1,67 @@
+
+  <div id="wrap" class="animsition">
+    <!-- HEADER Content -->
+    <div id="header">
+      <header class="clearfix">
+        <!-- Branding -->
+        <div class="branding" *ngIf='sideToggleButton==false'> <a class="brand" href="index.html"> <span><img src="assets/images/logo.png" /></span> </a> <a role="button" tabindex="0" class="offcanvas-toggle visible-xs-inline"> <i class="fa fa-bars"></i> </a> </div>
+        <!-- Branding end -->
+        <!-- Left-side navigation -->
+        <ul class="nav-left pull-left list-unstyled list-inline">
+          <li *ngIf='sideToggleButtonArrow==false'> <a role="button" tabindex="0" (click)='sideToggle()'> <i class="fa fa-outdent"></i> </a> </li>
+          <li *ngIf='sideToggleButtonArrow==true' > <a role="button" tabindex="0" (click)='sideToggle()'> <i class="fa fa-indent"></i> </a> </li>
+        </ul>
+        <!-- Left-side navigation end -->
+        <!-- Right-side navigation -->
+        <ul class="nav-right pull-right list-inline bg-tr-white">
+          <li class="dropdown nav-profile">
+            <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown"> <img src="assets/images/profile-photo.jpg" alt="" class="0 size-30x30"> <i class="fa fa-chevron-down ml-20" aria-hidden="true"></i></a>
+            <ul class="dropdown-menu pull-right" role="menu">
+              <li>
+                <div class="user-info">
+                  <div class="user-name">{{username}}</div>
+                  <div class="user-position online">Available</div>
+                </div>
+              </li>
+              <li> <a href="profile.html" role="button" tabindex="0"> <i class="fa fa-user"></i>Profile</a> </li>
+              
+              <li class="divider"></li>
+              <li> <a (click)="logout()" role="button" tabindex="0"> <i class="fa fa-sign-out"></i>Logout</a> </li>
+            </ul>
+          </li>
+        </ul>
+        <!-- Right-side navigation end -->
+
+        <ul class="top_navigation">
+            <li *ngFor="let item of modulesArray;let i=index" [ngClass]="item.module==selectedModule?'active':''">
+              <a [routerLink]="" (click)='getSubMenu(item.permissionId)' role="button"><i class="{{item.cssClass}}" aria-hidden="true"></i>&nbsp;&nbsp;{{item.module}}</a></li>
+
+          
+        </ul>
+
+        <!-- Top Navigation end -->
+
+      </header>
+      <div class="closenav">Navigation</div>
+    </div>
+    <!--/ HEADER Content  -->
+   
+    <app-side-bar [sideBarModules]="subModulesArray1" [selectedModuleTitle]="selectedModule" [selectedModulee]="moduleToShowActive" *ngIf='sideToggleButton==false'></app-side-bar>
+  
+    <!-- CONTENT -->
+    <section id="content" >
+      <div class="page bootstrap-page-tables">
+        <!-- bradcome -->
+        <div class="mb-10">
+          <router-outlet></router-outlet>
+        </div>
+
+        <!-- row -->
+        <!-- /row -->
+        
+      </div>
+
+      <!--Footer-->
+     
+    </section>
+  </div>

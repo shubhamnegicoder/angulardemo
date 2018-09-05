@@ -1,0 +1,458 @@
+
+
+
+
+<div class="row">
+  <div class="col-sm-6 col-xs-12" style="margin-left:0.5%">
+    <h1 class="h3 m-0">Product</h1>
+    <small class="text-muted breadcrumb">
+      Product Catalogue »
+       <a routerLink="/Product">Product</a> »<a routerLink="/EditProduct">Edit Product</a> </small>
+  </div>
+  <div class="card" style="min-height:550px;margin-right:40px;margin-top:1%;width:96%;margin-left:20px">
+    <h4 class="card-title" style="color: green ;padding :1%">Edit Product</h4>
+    <p style="color:black;font-size:14px;margin-left: 62%;margin-top: -2%;">(
+      <span style="color:red;">*</span>) indicates mandatory fields</p>
+    <form>
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label>
+            <span style="color: red">*</span>Product Name(Should be unique)
+          </label>
+          <input type="text" value="{{itemViewModel1.name}}" class="form-control" #name>
+        </div>
+        <div class="form-group col-md-4">
+          <label>
+            <span style="color: red">*</span>MRP
+          </label>
+          <input type="text" value="{{itemViewModel1.price}}" class="form-control" #price>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label>
+            <span style="color: red">*</span>Brand &nbsp;
+            <a class="text-success" data-target="#brandModal" data-toggle="modal">
+              <i aria-hidden="true" class="fa fa-plus" data-toggle="tooltip" title="Add New Brand"></i>
+            </a>
+          </label>
+          <select class="form-control" [(ngModel)]='data2.brand' #brand='ngModel' name='brand'>
+            <option value='' disabled>Select</option>
+            <option *ngFor='let brand of brandViewModels1' value='{{brand.id}}'>{{brand.name}}</option>
+          </select>
+        </div>
+        <div class="form-group col-md-4">
+          <label>
+            <span style="color: red">*</span>Sub Brand &nbsp;
+            <a class="text-success" data-target="#subBrandModal" data-toggle="modal">
+              <i aria-hidden="true" class="fa fa-plus" data-toggle="tooltip" title="Add New Sub Brand"></i>
+            </a>
+          </label>
+          <select class="form-control" [(ngModel)]='data2.subBrand' #subBrand='ngModel' name='subBrand'>
+            <option value='' disabled>Select</option>
+            <option *ngFor='let subBrand of subBrandViewModels1' value='{{subBrand.id}}'>{{subBrand.name}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label>
+            <span style="color: red">*</span>Category &nbsp;
+            <a class="text-success" data-target="#categoryModal" data-toggle="modal">
+              <i aria-hidden="true" class="fa fa-plus" data-toggle="tooltip" title="Add New Category"></i>
+            </a>
+          </label>
+          <select class="form-control" [(ngModel)]='data2.category' #category='ngModel' name='category'>
+            <option value='' disabled>Select</option>
+            <option *ngFor='let category1 of categoryViewModels1' value='{{category1.id}}'>{{category1.name}}</option>
+          </select>
+        </div>
+        <div class="form-group col-md-4">
+          <label>
+            <span style="color: red">*</span>Sub Category &nbsp;
+            <a class="text-success" data-target="#subCategoryModal" data-toggle="modal">
+              <i aria-hidden="true" class="fa fa-plus" data-toggle="tooltip" title="Add New Sub Category"></i>
+            </a>
+          </label>
+          <select class="form-control" [(ngModel)]='data2.subCategory' #subCategory='ngModel' name='subCategory'>
+            <option value='' disabled>Select</option>
+            <option *ngFor='let subCategory1 of subCategories1' value='{{subCategory1.id}}'>{{subCategory1.name}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label>
+            <span style="color: red">*</span>Department &nbsp;
+            <a class="text-success" data-target="#departmentModal" data-toggle="modal">
+              <i aria-hidden="true" class="fa fa-plus" data-toggle="tooltip" title="Add New Department"></i>
+            </a>
+          </label>
+          <select class="form-control" [(ngModel)]='data2.department' #department='ngModel' name='department'>
+            <option value='' disabled>Select</option>
+            <option *ngFor='let department1 of departmentViewModels1' value='{{department1.id}}'>{{department1.name}}</option>
+          </select>
+        </div>
+        <div class="form-group col-md-4">
+          <label>
+            <span style="color: red">*</span>Company &nbsp;
+            <a class="text-success" data-target="#companyModal" data-toggle="modal">
+              <i aria-hidden="true" class="fa fa-plus" data-toggle="tooltip" title="Add New Company"></i>
+            </a>
+          </label>
+          <select class="form-control" [(ngModel)]='data2.company' #company='ngModel' name='company'>
+            <option value='' disabled>Select</option>
+            <option *ngFor='let company1 of companyViewModels1' value='{{company1.id}}'>{{company1.name}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label>
+            <span style="color: red">*</span>Product Type {{productTypeName}}&nbsp;
+            <a class="text-success" data-target="#prodTypeModal" data-toggle="modal">
+              <i aria-hidden="true" class="fa fa-plus" data-toggle="tooltip" title="Add New Product Type"></i>
+            </a>
+          </label>
+          <select class="form-control" [(ngModel)]='data2.productType' #productType='ngModel' name='productType'>
+            <option value=''>Select</option>
+            <option *ngFor='let productType of productTypeViewModels1' value='{{productType.id}}'>{{productType.name}}</option>
+          </select>
+        </div>
+        <div class="form-group col-md-4">
+          <label>
+            Bar Code
+          </label>
+          <input type="text" class="form-control" value="{{itemViewModel1.barCode}}" #barCode>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label>
+            <span style="color: red">*</span>HSN Code
+          </label>
+          <input type="text" class="form-control" value="{{itemViewModel1.hsnCode}}" #hsnCode>
+        </div>
+        <div class="form-group col-md-4">
+          <label>
+            <span style="color: red">*</span>Tax &nbsp;
+            <a class="text-success" data-target="#taxModal" data-toggle="modal">
+              <i aria-hidden="true" class="fa fa-plus" data-toggle="tooltip" title="Add New Tax"></i>
+            </a>
+          </label>
+          <select class="form-control" #tax='ngModel' [(ngModel)]='data2.tax' name="tax">
+            <option value='' disabled>Select</option>
+            <option *ngFor='let tax1 of taxViewModels1' value='{{tax1.id}}'>{{tax1.name}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+      <div class="form-row">
+        <div class="form-group col-md-2">
+          <label>
+            Status
+          </label>
+          <label class="switch" data-toggle="tooltip" title="Status" style="position:absolute;
+    top: 18px;
+    right: 19px;">
+            <input type="checkbox" #check='ngModel' [(ngModel)]='data1.status' name="check">
+            <span class="slider round"></span>
+          </label>
+
+        </div>
+      </div>
+      <div class="clearfix"></div>
+      <div class="clearfix"></div>
+      <div class="form-row">
+        <div class="form-group " style="margin-left:296px">
+          <button type="button" class="btn btn-raised btn-success" data-toggle="tooltip" title="Click here to save" (click)='update(name.value,price.value,hsnCode.value,barCode.value)'>Submit</button>
+          <a routerLink="/Product">
+            <button type="button" class="btn btn-raised btn-warning" data-toggle="tooltip" title="Click here to back ">Back</button>
+          </a>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Brand Modal -->
+
+<div class="modal fade" id="brandModal" role="dialog" data-dismiss="modal" #closeBtn>
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Add Brand</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+
+          <input type="text" class="form-control" placeholder="Enter Name" name="brandName" [(ngModel)]='data.name' #brandName='ngModel'>
+        </div>
+      </div>
+      <div class="modal-footer">
+
+
+        <div class="col-md-12">
+          <button type="submit" class="btn btn-success btn-raised" (click)="createBrand(brandName.value)" data-dismiss="modal">Save</button>
+          <button type="reset" class="btn btn-raised btn-warning" data-dismiss="modal" (click)='close()'>Cancel</button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Sub Brand Modal -->
+
+<div class="modal fade" id="subBrandModal" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Add SubBrand</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group col-sm-6">
+
+
+          <input type="text" value="" class="form-control" placeholder="Enter SubBrand Name" name="subBrandName" [(ngModel)]='data.name'
+            #subBrandName='ngModel'>
+        </div>
+        <div class="form-group col-sm-6">
+          <!-- <input type="text" class="form-control" [ngModel]="selectedBrandName"  disabled/> -->
+          <select value="" class="form-control" name="brand" #brand='ngModel' [(ngModel)]='data.mainName'>
+            <option value="">Select</option>
+            <option *ngFor="let subBrand of brandViewModels1" value="{{subBrand.id}}">{{subBrand.name}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+
+
+        <div class="col-md-12">
+          <button type="submit" class="btn btn-success btn-raised" (click)="createSubBrand(subBrandName.value,brand.value)" data-dismiss="modal">Save</button>
+          <button type="reset" class="btn btn-raised btn-warning" data-dismiss="modal" (click)='close1()'>Cancel</button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Category Modal -->
+
+<div class="modal fade" id="categoryModal" role="dialog" data-dismiss="modal">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Add Category</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <input type="text" value="" class="form-control" placeholder="Enter Name" [(ngModel)]='data.name' name="categoryName" #categoryName='ngModel'>
+        </div>
+      </div>
+      <div class="modal-footer">
+
+
+        <div class="col-md-12">
+          <button type="button" class="btn btn-success btn-raised" (click)="createCategory(categoryName.value)" data-dismiss="modal">Save</button>
+          <button type="reset" class="btn btn-raised btn-warning" data-dismiss="modal" (click)='close()'>Cancel</button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Sub Category Modal -->
+
+<div class="modal fade" id="subCategoryModal" role="dialog" data-dismiss="modal">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Add Sub Category</h4>
+      </div>
+      <div class="modal-body" style="padding:0px 24px 100px 24px">
+        <div class="form-group col-sm-6">
+
+          <input type="text" value="" class="form-control" placeholder="Enter Name" [(ngModel)]='data.name' name="subCatName" #subCatName='ngModel'>
+        </div>
+        <div class="form-group col-sm-6">
+          <select class="form-control" name='category' [(ngModel)]='data.mainName' #category='ngModel'>
+            <option value="">Select </option>
+            <option *ngFor="let data of categoryViewModels1" value="{{data.id}}">{{data.name}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+
+
+        <div class="col-md-12">
+          <button type="button" class="btn btn-success btn-raised" (click)="createSubCategory(subCatName.value,category.value)" data-dismiss="modal">Save</button>
+          <button type="reset" class="btn btn-raised btn-warning" data-dismiss="modal" (click)='close1()'>Cancel</button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Department Modal -->
+
+<div class="modal fade" id="departmentModal" role="dialog" data-dismiss="modal">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Add Department</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <input type="text" value="" class="form-control" placeholder="Enter Name" name='depName' [(ngModel)]='data.name' #depName='ngModel'>
+        </div>
+      </div>
+      <div class="modal-footer">
+
+
+        <div class="col-md-12">
+          <button type="button" class="btn btn-success btn-raised" data-dismiss="modal" (click)="createDepartment(depName.value)">Save</button>
+          <button type="reset" class="btn btn-raised btn-warning" data-dismiss="modal" (click)='close()'>Cancel</button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Company Modal -->
+<div class="modal fade" id="companyModal" role="dialog" data-dismiss="modal">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Add Company</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <input type="text" value="" [(ngModel)]='data.name' class="form-control" placeholder="Enter Name" name='compName' #compName='ngModel'>
+        </div>
+      </div>
+      <div class="modal-footer">
+
+
+        <div class="col-md-12">
+          <button type="button" class="btn btn-success btn-raised" (click)="createCompany(compName.value)" data-dismiss="modal">Save</button>
+          <button type="reset" class="btn btn-raised btn-warning" data-dismiss="modal" (click)='close()'>Cancel</button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Tax Modal -->
+<div class="modal fade" id="taxModal" role="dialog" data-dismiss="modal">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Add Tax</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group col-sm-6">
+          <label>Country:</label>
+          <!-- <input type="text" value="" class="form-control" name="country" [(ngModel)]='data.name' placeholder="Enter Name" #country='ngModel'> -->
+          <select [(ngModel)]='data.country' #country='ngModel' name='country' class="form-control">
+            <option value=''>Select</option>
+            <option *ngFor='let data of countryList' value='{{data.id}}'>{{data.name}}</option>
+          </select>
+        </div>
+        <div class="form-group col-sm-6">
+          <label>Name:</label>
+          <input type="text" value="" class="form-control" name="taxName" [(ngModel)]='data.name' placeholder="Enter Tax Name" #taxName='ngModel'>
+        </div>
+        <div class="form-group col-sm-6">
+          <label>Tax:</label>
+          <input type="text" value="" class="form-control" placeholder="Enter Tax" name="taxField" [(ngModel)]='data.taxField' #taxField='ngModel'>
+        </div>
+        <div class="form-group col-sm-6">
+          <label>Cess:</label>
+          <input type="text" value="" class="form-control" name='cess' placeholder="Enter Cess" [(ngModel)]='data.cess' #cess='ngModel'>
+        </div>
+      </div>
+      <div class="modal-footer">
+
+
+        <div class="col-md-12">
+          <button type="button" class="btn btn-success btn-raised" data-dismiss="modal" (click)='createTax(taxName.value,taxField.value,cess.value,country.value)'>Save</button>
+          <button type="reset" class="btn btn-raised btn-warning" data-dismiss="modal" (click)='close2()'>Cancel</button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Product Type Modal -->
+<div class="modal fade" id="prodTypeModal" role="dialog" data-dismiss="modal">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Add Product Type</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <input type="text" value="" class="form-control" placeholder="Enter Name" #prodTypeName='ngModel' name="prodTypeName" [(ngModel)]='data.name'>
+        </div>
+      </div>
+      <div class="modal-footer">
+
+
+        <div class="col-md-12">
+          <button type="button" class="btn btn-success btn-raised" (click)="createProductType(prodTypeName.value)" data-dismiss="modal">Save</button>
+          <button type="reset" class="btn btn-raised btn-warning" data-dismiss="modal" (click)='close()'>Cancel</button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--Footer -->
+<ul class="footer">
+  <li class="pull-left">Copyright &copy; 2018 Limitless Mobility Solutitons Pvt Ltd. All rights reserved.</li>
+  <li class="pull-right">Powered by
+    <a href="http://zoneonedigital.com/" target="_blank">Zone One Digital</a>
+  </li>
+</ul>
+
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="medium" color="#f3903f" type="ball-triangle-path"></ngx-spinner>

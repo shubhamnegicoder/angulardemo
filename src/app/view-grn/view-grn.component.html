@@ -1,0 +1,152 @@
+
+    <!--/ HEADER Content  -->
+    <div class="row">
+        <div class="col-sm-6 col-xs-12">
+          <h1 class="h3 m-0">View GRN</h1>
+          <small class="text-muted breadcrumb">
+              <a routerLink="/Warehouse">Warehouse</a> »
+              Inbound<a routerLink="/GRN">» GRN</a>» View Grn </small>
+        </div>
+    <div class="card" style="height:100%; width:970px;margin-top:2%">
+      <div class="card-body" style="margin-left: 47px; margin-right:-243px;">
+        <!-- <h4 class="card-title" style="color: green">View GRN</h4> -->
+       
+          <div class="form-row">
+            <div class="form-group col-md-3">
+              <label for="warehouse">
+                Warehouse
+              </label>
+              <input type="text" value="{{viewList.warehouseName}}" class="form-control" disabled>
+            </div>
+            <div class="form-group col-md-3">
+              <label for="vendor">
+              Vendor
+              </label>
+              <input type="text"  value="{{viewList.vendorName}}" class="form-control" disabled>
+            </div>
+            <div class="form-group col-md-3">
+              <label for="PO">
+               PO
+              </label>
+              <input type="text" class="form-control"  value="{{viewList.poCode}}" disabled>
+            </div>
+          </div>
+          <!--  -->
+          <div class="clearfix"></div>
+          <!-- <div *ngIf="poSelected"> -->
+            <div class="form-row">
+              <div class="form-group col-md-3">
+                <label for="GRNDate">
+                  GRN Date
+                </label>
+                <input type="text"  value="{{viewList.date | date:'dd MMM, yyyy'}}" class="form-control" disabled>
+              </div>
+              <div class="form-group col-md-3">
+                <label for="InvoiceNo">
+                  Invoice No
+                </label>
+                <input type="text"  value="{{viewList.invoiceNo}}" class="form-control" disabled>
+              </div>
+              <div class="form-group col-md-3">
+                <label for="Date">
+                  Invoice Date 
+                </label>
+                <input type="text"  value="{{viewList.invoiceDate | date: 'dd MMM, yyyy'}}" class="form-control"   disabled>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+           
+            <div class="form-row">
+              <div class="form-group col-md-3" >
+                <label for="PO">
+                  Total Qty
+                </label>
+                <input type="text" class="form-control" value="{{quantity}}" #poquantity disabled>
+              </div>
+              <div class="form-group col-md-3">
+                <label for="Amount">
+                  <input type="hidden" #totalAmount1>
+                  Total Amount
+                </label>
+                <input type="text"  class="form-control" value="{{amount1 | number:'0.2'}}" #amount disabled>
+              </div>
+              <div>
+                  <div class="form-group col-md-3">
+                      <label >
+                       Status
+                      </label>
+                      <input type="text"  class="form-control" value="Closed" disabled>
+                    </div><div class="clearfix"></div>
+              <div class="form-group col-md-3">
+                <label >
+                 Released By
+                </label>
+                <input type="text"  class="form-control" value="{{viewList.releasedBy}}" disabled>
+              </div>
+              <div class="form-group col-md-3">
+                <label >
+                 Released On
+                </label>
+                <input type="text"  class="form-control" value="{{releasedDate | date:'dd MMM, yyyy'}}" disabled>
+              </div>
+              <div class="clearfix"></div>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="boxs-body">
+                <div>
+                    <h4 class="card-title" style="color:green">
+                      GRN Details
+                     
+                    </h4>
+                    </div>
+              <div class="table-responsive" style="width:880px;background-color:white;">
+                <table class="table mb-0 table-striped" id="myTable">
+                  <thead>
+                    <tr class=" bg-lightgray">
+                      <!-- <th class="text-darkgray">HSN</th> -->
+                      <th class="text-darkgray">Name</th>
+                      <th class="text-darkgray">MRP</th>
+                      <th class="text-darkgray">PO Qty</th>
+                      <th class="text-darkgray">Inward Qty</th>
+                      <th class="text-darkgray">Base</th>
+                      <th class="text-darkgray">Amount&nbsp;(₹​)</th>
+                      <th class="text-darkgray">Exp. Date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                   <tr *ngFor="let data of viewArray">
+                     <!-- <td>{{data.hsnCode}}</td> -->
+                     <td>{{data.itemName}}</td>
+                     <td>{{data.price | number:'0.2'}}</td>
+                     <td>{{data.poQuantity}}</td>
+                     <td>{{data.quantity}}</td>
+                     <td>{{data.basePrice | number:'0.2'}}</td>
+                     <td>{{data.netAmount | number:'0.2'}}</td>
+                     <td>{{data.itemExpiryDate | date:'dd MMM, yyyy'}}</td>
+                   </tr>
+                  </tbody>
+                </table> 
+              </div>
+            <!-- </div> -->
+            <!-- /boxs body -->
+          </div>
+          <div class="clearfix"></div> 
+          <div class="form-row">
+            <div class="form-group " style="margin-left:350px">
+              <a routerLink="/GRN"><button type="button" class="btn btn-raised btn-warning" data-toggle="tooltip" title="Click here">Back</button></a>
+            </div>
+          </div>
+       
+      </div>
+    </div>
+
+
+    <!-- Footer-->
+<ul class="footer">
+  <li class="pull-left">Copyright &copy; 2018 Limitless Mobility Solutitons Pvt Ltd. All rights reserved.</li>
+  <li class="pull-right">Powered by
+    <a href="http://zoneonedigital.com/" target="_blank">Zone One Digital</a>
+  </li>
+</ul> 
+  

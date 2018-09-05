@@ -1,0 +1,242 @@
+﻿
+body{font-family: 'Lato', sans-serif;}
+.page {
+    padding: 0 20px;
+}
+.boxs .boxs-header, .boxs .boxs-widget, .boxs .boxs-body, .boxs .boxs-footer {
+    padding: 5px 15px;
+}
+table{font-size:13px;}
+.left_menu{background:#f0f0f0}
+.authentication .wrapper .card-signup {
+    margin: 10px 0 0px;
+}
+
+#header .branding a.brand {
+    line-height: 40px;
+    height: 40px; text-align:center; width:100%
+}
+
+#header .branding {
+    padding: 6px 15px;
+}
+.loginpage h3{color:#f3903f; font-size:30px}
+.loginpage .subhead{color:#959595; font-style:italic}
+.loginpage .btn{width:100%}
+.loginpage h3 span{font-size:26px}
+#header .branding a.brand img{width:80%; text-align:center; margin:0 auto}
+.main_Wrapper.aside-fixed #leftmenu {top:40px;}
+/* Top Navigation */
+.top_navigation{padding:0; margin:9px; float:right; font-size:14px}
+.top_navigation li{display:inline; padding:0 10px}
+.top_navigation li a{color:#fff;}
+.top_navigation li a:hover{color:#f3903f; text-decoration:none;}
+.top_navigation li.active a{color:#f3903f;}
+
+/* Left Navigation */
+.panel-body .head{background:#f3903f; padding: 10px 0 10px 20px; border-radius: 8px 8px 0 0; color:#fff; font-weight:600}
+.panel-body .head .fa{margin-right:5px}
+.panel-body .left_menu{padding:10px 0 0 0; margin:0;}
+.panel-body .left_menu li{padding: 5px 0 5px 20px; font-size:14px}
+.panel-body .left_menu li a{color:#333}
+.panel-body .left_menu li.active a{color:#f3903f}
+.panel-body .left_menu li.active a:before{color:#f3903f}
+.panel-body .left_menu li a:hover{text-decoration:none; color:#f3903f}
+.panel-body .left_menu li:hover a:before{text-decoration:none; color:#f3903f}
+
+.panel-body .left_menu li a:before{content: "\f105";
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+   
+    text-decoration: inherit; color:#ccc; padding-right: 5px;}
+.footer{font-size:12px; list-style:none; margin:0; padding:0 20px 30px 20px}	
+.closenav{display:none;}
+
+/* Custom Button Color */
+.btn.btn-raised.btn-success, .btn.btn-fab.btn-success, .btn-group-raised .btn.btn-success, .input-group-btn .btn.btn-raised.btn-success, .input-group-btn .btn.btn-fab.btn-success, .btn-group-raised.input-group-btn .btn.btn-success {
+    background-color: #95cf22;}
+	
+	.btn.btn-raised.btn-warning, .btn.btn-fab.btn-warning, .btn-group-raised .btn.btn-warning, .input-group-btn .btn.btn-raised.btn-warning, .input-group-btn .btn.btn-fab.btn-warning, .btn-group-raised.input-group-btn .btn.btn-warning {
+    background-color: #898989;
+}
+.btn.btn-raised.btn-info, .btn.btn-fab.btn-info, .btn-group-raised .btn.btn-info, .input-group-btn .btn.btn-raised.btn-info, .input-group-btn .btn.btn-fab.btn-info, .btn-group-raised.input-group-btn .btn.btn-info {
+    background-color: #2d3e50;}
+
+.btn.btn-raised.btn-info, .btn.btn-fab.btn-info, .btn-group-raised .btn.btn-info, .input-group-btn .btn.btn-raised.btn-info, .input-group-btn .btn.btn-fab.btn-info, .btn-group-raised.input-group-btn .btn.btn-info {
+    background-color: #f3903f
+}	
+/* END */	
+
+.breadcrumb {
+    padding: 0;
+    background-color: none;
+    border-radius:0;
+    font-size: 12px;
+}
+.pagination{font-size:12px}
+	
+.pagestatus{font-size:14px; padding-top:20px}
+
+@media only screen and (max-width: 600px) {
+	
+	.main_Wrapper.leftmenu-xs #header .branding {
+    text-align: center;}
+	
+.main_Wrapper.leftmenu-xs #header .branding img{width:80%}	
+.main_Wrapper.leftmenu-xs #header .branding .brand > span {
+    margin-left: 0;
+}
+	
+	.main_Wrapper.leftmenu-xs #header .nav-right {
+    position: absolute;
+    right: 0;
+    height: 60px;
+}
+
+.main_Wrapper.leftmenu-xs #header .nav-right > li .dropdown-menu {
+    left: -100px !important;
+}
+
+.top_navigation {
+    float: left !important; display:inherit; position:relative; width:100%; display:none;
+}
+.top_navigation li{
+    display:inherit;
+}
+
+
+.closenav{color: #fff;
+background: #f3903f;
+padding: 5px 5px;
+cursor: pointer;
+z-index: 999;
+width: 100%;
+text-align: center; display:block}
+.page {
+    padding: 40px 20px 20px 20px;
+}
+}
+
+/*Deepen Css */
+#acdnmenu ul.acdnTop {
+    display: block;
+    border: 1px solid #D8E2F3;
+    background: none repeat scroll 0 0 #FFFFFF;
+    padding-left: 0;
+    }
+    #acdnmenu div.acdnHeading, #acdnmenu a.acdnLink {
+    background: #f0f0f0;
+    color: #000000;
+    font: 12px Verdana;
+    outline: medium none;
+    padding: 8px 8px 8px 24px;
+    text-align: left;
+    text-decoration: none;
+    }
+    #acdnmenu div.acdnCurrent, #acdnmenu div:hover, #acdnmenu a.acdnLink:hover, #acdnmenu div.acdnCurrent a.acdnLink {
+    background-position: 0 -64px;
+    color: #000000;
+    font-weight: normal;
+    text-decoration: none;
+    }
+    #acdnmenu a.acdnCurrent, #acdnmenu a.acdnCurrent:hover {
+    color: #336699;
+    text-decoration: none;
+    }
+    #acdnmenu div.acdnArrowImage {
+    background-image: url("arrows.gif");
+    background-position: 0 0;
+    height: 12px;
+    left: 4px;
+    top: 9px;
+    width: 12px;
+    }
+    #acdnmenu div.acdnCurrent div.acdnArrowImage {
+    background-position: 0 -12px;
+    }
+    #acdnmenu li.acdnSeparator {
+    border-bottom: 1px solid #D8E2F3;
+    padding: 0px 0px 0px 0px;
+    margin: 0px 0px 0px 0px;
+    font-size: 0px;
+    }
+    #acdnmenu ul.acdnSub {
+    padding-left: 14px;
+    
+    }
+    
+    #acdnmenu ul.acdnSub div.acdnHeading {
+    background: none repeat scroll 0 0 transparent;
+    color: #000000;
+    font: 12px Arial;
+    padding: 5px 5px 5px 20px;
+    text-align: left;
+    }
+    #acdnmenu ul.acdnSub div.acdnHeading a {
+    color: #000000;
+    }
+    #acdnmenu ul.acdnSub div.acdnCurrent {
+    background: none repeat scroll 0 0 transparent;
+    color: #000000;
+    }
+    #acdnmenu ul.acdnSub a.acdnLink {
+    background: none repeat scroll 0 0 transparent;
+    color: #000000;
+    font: 11px Arial;
+    padding: 5px 5px 5px 20px;
+    text-decoration: none;
+    }
+    #acdnmenu ul.acdnSub a.acdnLink:hover, #acdnmenu ul.acdnSub a.acdnCurrent, #acdnmenu ul.acdnSub div.acdnHeading a:hover, #acdnmenu ul.acdnSub div.acdnHeading a.acdnCurrent {
+    background: none repeat scroll 0 0 transparent;
+    color: #000000;
+    text-decoration: underline;
+    }
+    #acdnmenu ul.acdnSub div.acdnArrowImage {
+    background-image: url("arrows.gif");
+    background-position: 0 -24px;
+    height: 12px;
+    left: 4px;
+    top: 6px;
+    width: 12px;
+    }
+    #acdnmenu ul.acdnSub div.acdnCurrent div.acdnArrowImage {
+    background-position: 0 -36px;
+    }
+    #acdnmenu, #acdnmenu ul {
+    display: block;
+    font-size: 0;
+    line-height: 0;
+    }
+    #acdnmenu li {
+    font-size: 12px;
+    line-height: 16px;
+    }
+    #acdnmenu:after {
+    clear: both;
+    content: ".";
+    display: block;
+    height: 0;
+    visibility: hidden;
+    }
+    #acdnmenu ul {
+    list-style-type: none;
+    margin: 0px;
+    overflow: hidden;
+    padding: 0px;
+    position: relative;
+    top: 0px;
+    display: none;
+    }
+    #acdnmenu li {
+    margin: 0px;
+    padding: 0px;
+    }
+    #acdnmenu div.acdnHeading, #acdnmenu div.acdnCurrent {
+    cursor: pointer;
+    position: relative;
+    }
+    #acdnmenu div.acdnArrowImage {
+    overflow: hidden;
+    position: absolute;
+    }

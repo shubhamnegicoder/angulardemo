@@ -1,0 +1,233 @@
+<div class="row">
+  <div class="col-sm-6 col-xs-12">
+    <h1 class="h3 m-0">Product Margin</h1>
+    <small class="text-muted breadcrumb">Product Catalogue »<a routerLink="/ProductMargin"> Product Margin</a> »<a routerLink="/importproductmargin">Import Product Margin </a></small>
+  </div>
+</div>
+
+<div class="card" style="min-height:117%;margin-top:1%;float:right;margin-right:40px;width:96%;position:absolute;overflow: -webkit-paged-y;overflow-x:hidden">
+
+
+  <div class="card-body" style="margin-left: 47px; margin-right: -243px;">
+    <h3 class="card-title" style="text-align: left;margin-left: -63px;margin-top: -16px;">Import Product Margin</h3>
+    <div class="labelwarning" style="text-align: right;margin: -11px 244px 0px -40px;">
+      (<span style="color: red">*</span>) indicates mandatory feilds
+    </div>
+    <form #import=ngForm class="form-inline"  (ngSubmit)="exportitem(import)" style="margin:10%;position: absolute; top: 21px;right: -89px;left: -89px;">
+      <fieldset style="margin-top: -67px;min-height:408px;">
+
+        <legend> Product Margin Details</legend>
+        <div class="basicdetails " style="height:127px;">
+
+          <div class="form-row">
+            <div class="form-group col-md-4">
+                <label for="country">
+                    <span style="color: red">*</span>Country:
+                  </label>&nbsp;
+                 
+                    
+                 
+                  <select id="country" class="form-control" style="min-width:  200px;" #CountryId="ngModel" name="CountryId"  [(ngModel)]="importdetails.countryId"  (change)="selectstate($event)" required>
+                      
+                    <option value="" disabled selected>select country</option>
+                    <option *ngFor="let items of countrylist" value="{{items.id}}">{{items.name}}</option>
+                  </select>
+                  <span *ngIf="CountryId.invalid && (CountryId.dirty ||CountryId.touched)">
+                      <span *ngIf="CountryId.errors.required" style="color:red;display:block;position:absolute;">
+                          Country is mandatory
+                      </span>
+                  </span>
+            
+            </div>
+         
+            <div class="form-group col-md-4">
+                <label for="state">
+                    <span style="color: red">*</span>State:
+                  </label>&nbsp;
+                  <select id="state" class="form-control" name="StateId" #StateId="ngModel" [(ngModel)]="importdetails.stateId" style="width:200px;" (change)="selectcity($event)" required>
+                      
+                    <option value="" disabled selected>select state</option>
+                    <option *ngFor="let items of statelist" value="{{items.id}}">{{items.name}}</option>
+                  </select>
+                  <span *ngIf="StateId.invalid && (StateId.dirty ||StateId.touched)">
+                      <span *ngIf="StateId.errors.required" style="color:red;display:block;position:absolute;">
+                          State is mandatory
+                      </span>
+                  </span>
+              </div> 
+
+            <div class="form-group col-md-4">
+                 
+                <div class="formlabel" style="position:absolute; top:-17px;left: 16px;">
+                    (&nbsp;<span title="Select All"><input id="citycheck" type="checkbox"  name="citycheck" [(checked)]="citysinglecheck" (click)="allcheck($event);"></span>&nbsp;)<label>Select All</label>&nbsp;
+                </div>
+                        <label for="city" style="margin-top: 12px;">
+                           City:</label> &nbsp;
+                    <div class="city" style="width:253px;height: 100px;overflow-x: auto;overflow-y: scroll;border: solid 1px #ccc;background-color: white;position: absolute;
+                    left: 51px;
+                    top: 9px;">       
+                          <!-- <input type="checkbox"  id="city" name="CityId"  [(ngModel)]="warehouseform.CityId" #city="ngModel" required> -->
+                    
+                          <table  id="city">
+                              <tbody><tr *ngFor="let items of citylist">
+                                <td ><input type="checkbox"  id="city" name="CityId" [(checked)]="citysinglecheck"  [value]="items.id" (click)="singlecheck($event,items.name,items.id)" ><label for="city">{{items.name}}</label></td>
+                              </tr>
+                            </tbody></table>
+                    </div>
+                 
+              </div>
+          </div>
+        </div><!--next div -->
+ 
+                  <div class="form-row">
+                    <div class="form-group col-md-4">
+                      <label for="category">
+                        <span style="color: red">*</span>Category:
+                      </label>&nbsp;
+                     
+                        
+                     
+                      <select id="category" class="form-control" style="min-width:193px;" #categoryId="ngModel" name="categoryId"  [(ngModel)]="importdetails.categoryId"  (change)="selectsubcategory($event)" required>
+                          
+                        <option value="" disabled selected>select category</option>
+                        <option *ngFor="let items of categorylist" value="{{items.id}}">{{items.name}}</option>
+                      </select>
+                      <span *ngIf="categoryId.invalid && (categoryId.dirty ||categoryId.touched)">
+                          <span *ngIf="categoryId.errors.required" style="color:red;display:block;position:absolute;">
+                              category is mandatory
+                          </span>
+                      </span>
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label for="subcategory">
+                      Subcategory:
+                      </label>&nbsp;
+                      <select id="subcategory" class="form-control" name="subcategoryId" #subcategoryId="ngModel" [(ngModel)]="importdetails.subcategoryId" style="width:160px;" >
+                          
+                        <option value="" disabled selected>select Subcategory</option>
+                        <option *ngFor="let items of subcategorylist" value="{{items.id}}">{{items.name}}</option>
+                      </select>
+                   
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label for="brand">
+                        <span style="color: red">*</span> Brand:
+                      </label>&nbsp;
+                      <select [(ngModel)]="importdetails.brandId" id="brandId" class="form-control" #brandId="ngModel" name="brandId" style="width:200px;" (click)="selectsubbrand($event)" required>
+                          
+                        <option value="" disabled selected>select Brand</option>
+                        <option *ngFor="let items of brandlist" value="{{items.id}}">{{items.name}}</option>
+                      </select>
+                      <span *ngIf="brandId.invalid && (brandId.dirty ||brandId.touched)">
+                          <span *ngIf="brandId.errors.required" style="color:red;display:block;position:absolute;">
+                              brand is mandatory 
+                          </span>
+                      </span>
+                    </div><br><br>
+                  </div>
+                  
+                  <div class="form-row" style="margin-top: 43px;">
+                    <div class="form-group col-md-4">
+                      <label for="subbrand">
+                        Subbrand:
+                      </label>&nbsp;
+                      <select  class="form-control" name="subbrandId" style="width:190px;" #subbrandId="ngModel"  [(ngModel)]="importdetails.subbrandId" id="subbrand">
+                          <option value="" disabled selected>select SubBrand</option>
+                          <option *ngFor="let items of subbrandlist" value="{{items.id}}">{{items.name}}</option>
+
+                      </select>
+                       
+                    </div>
+                    <div class="form-group col-md-4">
+                       <!--empty-->
+                    </div>
+                    <div class="form-group col-md-4">
+                        <div class="formlabel" style="position:absolute; top:-17px;left: 16px;">
+                            (&nbsp;<span title="Select All"><input id="productcheck" type="checkbox" name="productcheck" [(checked)]="allcheckedproduct" (click)="allproductcheck($event)"></span>&nbsp;)<label>Select All</label>&nbsp;
+                        </div>
+                        <label for="productname" style="margin-top: 12px;position: absolute;left:-8px;">
+                          Product:</label> &nbsp;
+                          <div class="productname" style="width:253px;height: 100px;overflow-x: auto;overflow-y: scroll;border: solid 1px #ccc;background-color: white;position: absolute;
+                            left: 51px;
+                            top: 9px;">  
+                         
+                          <table id="productname" rows="6">
+                              <tbody>
+                                <tr *ngFor="let items of productlist">
+                                <td> <input type="checkbox"  id="productname" [(checked)]="items.singlecheck" name="productnameId" (click)="singleproductcheck($event,items.name,items.id)" [value]="items.id"><label for="productname">{{items.name}}</label></td>
+                              </tr>
+                            </tbody>
+                          </table>
+
+                        </div>
+                         
+                    </div>
+                  </div>
+                 
+                
+                  <div class="form-row">
+                      <div class="form-group"  style="margin-top:77px">
+                        <div class="col-md-6 text-center">
+                          <button type="submit" class="btn btn-raised btn-success">
+                            Download File
+                            <div class="ripple-container"></div>
+                          </button>
+              
+                        </div>
+                        <div class="col-md-6 text-center">
+                          <input  type="button" class="btn btn-raised btn-dark" value="Reset" (click)="resetForm()">
+                        </div>
+                      </div>
+                    </div>
+              
+           
+             
+          
+        
+      </fieldset>
+    </form>
+      <fieldset style="height: 236px;left: -64px;top: 433px;width: 85%;">
+          <legend> Import excel</legend>
+        <div class="formrepeat" style="margin: 4px 16px 4px;">
+        
+          <div class="upload"><label  style="color:black; font-weight: bold;"><span  style="color:red;">*</span> Choose Excel File (.xls or .xlsx files only. Name should be unique.): </label><form enctype="multipart/form-data" novalidate=""><input  class="form-control"  #fileInput style="text-align:center;width:100%; background-color:white;height:25%" type="file"><br></form>
+            <label _ngcontent-c9="">For downloading the Excel format</label>&nbsp;&nbsp;<a _ngcontent-c9="" download="SampleProductMargin.xls" href="../../../assets/SampleProductMargin.xls" style="font-weight: bold">Click here</a></div>
+          <div class="form-group"  style="margin: 15px 316px 0px;">
+              <div class="col-md-6 text-center">
+                <button  class="btn btn-raised btn-success"  (click)="importAsXLSX()">
+                  Import
+                  <div class="ripple-container"></div>
+                </button>
+    
+              </div>
+              <div class="col-md-6 text-center">
+                <button type="button" class="btn btn-raised btn-dark" >Back</button>
+              </div>
+            </div>
+        </div>
+            
+          
+      </fieldset>
+     
+    
+  </div>
+
+  <!-- add product -->
+
+
+
+
+
+</div>
+<div class="row" style="position: relative;
+top: 745px;
+"> 
+<ul class="footer">
+  <li class="pull-left">Copyright &copy; 2018 Limitless Mobility Solutitons Pvt Ltd. All rights reserved.</li>
+  <li class="pull-right">Powered by <a href="http://zoneonedigital.com/" target="_blank">Zone One Digital</a></li>
+</ul>
+</div>
+
+
+
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="medium" color="#f3903f" type="ball-triangle-path"></ngx-spinner>

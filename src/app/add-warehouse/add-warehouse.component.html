@@ -1,0 +1,455 @@
+<div class="row">
+  <div class="col-sm-6 col-xs-12">
+    <h1 class="h3 m-0">Warehouse</h1>
+    <small class="text-muted breadcrumb"><a href="#">Warehouse</a> »  Add Warehouse</small>
+  </div>
+  
+</div>
+<div class="card" style="min-height:105%;margin-top:1%;float:right;margin-right:40px;width:96%;position: absolute;overflow: hidden;">
+    <h4 class="card-title" style="color: green;padding:1%">Add Warehouse</h4>
+ 
+  <!-- <div class="row">
+    <div class="col-md-6">
+          <div class="panel with-nav-tabs panel-default">
+              <div class="panel-heading">
+                      <ul class="nav nav-tabs">
+                          <li class="active"><a href="#tab1default" data-toggle="tab">Default 1</a></li>
+                          <li><a href="#tab2default" data-toggle="tab">Default 2</a></li>
+                          <li><a href="#tab3default" data-toggle="tab">Default 3</a></li>
+                         
+                      </ul>
+              </div>
+             
+              
+          </div>
+      </div>
+     
+</div> -->
+
+  <div class="card-body" style="margin-left: 47px; margin-right: -243px;">
+   
+    <div class="labelwarning" style="text-align: right;margin: -40px 244px 0px -40px;">
+      (<span style="color: red">*</span>)indicates mandatory feilds
+    </div>
+    <form #warehouse=ngForm class="form-inline"  (ngSubmit)="submitform(warehouse)" style="margin:10%;position: absolute; top: 21px;right: -89px;left: -89px;">
+      <fieldset style="margin-top: -67px;">
+
+        <legend>Basic Details</legend>
+        <div class="basicdetails " style="height:127px;">
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">
+                <span style="color: red">*</span>Name(unique):</label>&nbsp;
+              <input type="text" id="name" class="form-control"  name="name" [(ngModel)]="warehouseform.name" #name="ngModel" required>
+              <span *ngIf="name.invalid && (name.dirty ||name.touched)">
+                  <span *ngIf="name.errors.required" style="color:red;display:block;position:absolute;">
+                    Warehouse name is mandatory
+                  </span>
+              </span>
+            </div> &nbsp; &nbsp; &nbsp;
+            <!-- <span style="left: 71px;position: absolute;" *ngIf="warehouseform.controls['name'].invalid && (warehouseform.controls['name'].dirty || warehouseform.controls['name'].touched)">
+              <span *ngIf="warehouseform.controls['name'].errors.required" style="color:red;font-size:15px;">
+                Name is required.
+              </span>
+            </span> -->
+
+            <div class="form-group">
+              <label for="panno">
+                <span style="color: red">*</span>PAN No:</label> &nbsp;
+              <input type="text" class="form-control" id="panno" name="panNo"  [(ngModel)]="warehouseform.panNo" #panNo="ngModel" required>
+              <span *ngIf="panNo.invalid && (panNo.dirty ||panNo.touched)">
+                <span *ngIf="panNo.errors.required" style="color:red;display:block;position:absolute;">
+                  panNo is mandatory
+                </span>
+            </span>
+            </div>&nbsp; &nbsp; &nbsp;
+
+            <!-- <div class="form-group ">
+                  <label for="cin no"><span style="color: red">*</span>CIN No: </label>&nbsp;
+                <input type="text"  formControlName="cinno" id="invoicephone">
+              </div>&nbsp; &nbsp; &nbsp;&nbsp; -->
+            <div class="form-group">
+              <label for="mainwarehouse">Main warehouse: </label>&nbsp; &nbsp;
+              <input type="checkbox"  id="mainwarehouse" name="mainWarehouse"  [(ngModel)]="warehouseform.mainWarehouse"  >
+            </div>&nbsp;
+            <div class="form-group">
+                <label for="contactname">Contact Name: </label>&nbsp; &nbsp; &nbsp;&nbsp;
+                <input type="text" class="form-control" id="contactname" name="contactName"  [(ngModel)]="warehouseform.contactPerson"  >
+              </div>&nbsp; &nbsp; &nbsp;
+              <div class="form-group">
+                  <label for="contactperson">Contact Number: </label>&nbsp; &nbsp; &nbsp;&nbsp;
+                  <input type="text"  class="form-control" id="contactperson" name="contactNumber"  [(ngModel)]="warehouseform.contactNumber"  >
+              </div>
+              <div class="form-group">
+                  <label for="status" hidden>Status: </label>&nbsp; &nbsp; &nbsp;&nbsp;
+                  <input type="checkbox" hidden  id="status" name="isActive"  [(ngModel)]="warehouseform.isActive">
+                </div>
+          </div>
+        </div>
+      </fieldset>
+      <br>
+      <!-- tab headers -->
+      <div class="panel with-nav-tabs panel-primary">
+        <div style="margin-top: 21px;">
+          <ul class="nav nav-tabs">
+            <li class="nav-link active">
+              <a href="#tab1primary" data-toggle="tab">
+                <legend style="width: 139px;">Shipping Details</legend>
+              </a>
+            </li>
+            <li class="nav-link">
+              <a href="#tab2primary" data-toggle="tab">
+                <legend style="width: 139px;">Invoice Details</legend>
+              </a>
+            </li>
+
+
+          </ul>
+        </div>
+
+
+      </div>
+
+
+
+
+      <!-- <! tab content> -->
+
+      <div class="panel-body">
+        <div class="tab-content">
+          <div class="tab-pane fade in active" id="tab1primary" style="margin-left: -33px;margin-top:-48px;">
+            <fieldset style="width: 103%;height: 260px;">
+             
+              <div class="shippingdetails" style="height: 186px;text-align: right;margin-top: 4%;">
+                <div class="form-row">
+                  <div class="form-group col-md-4">
+                    <label for="shippingcountry">
+                      <span style="color: red">*</span>Country:
+                    </label>&nbsp;
+                   
+                      <!-- <input style="min-width:200px;" class="form-control" type="text" placeholder="Country"  name="shippingCountryId"   #shippingCountryId="ngModel" (ngModelChange)="filteredCountryOptions=autocomplete(warehouseform.shippingCountryId) " required  aria-label="Country" matInput [(ngModel)]="warehouseform.shippingCountryId" [matAutocomplete]="auto">
+                      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                        <mat-option #autooptions *ngFor="let option of filteredCountryOptions"  (onSelectionChange)=selectstate(auto)   [value]="option">
+                                {{option.name}}
+                        </mat-option>
+                      </mat-autocomplete> -->
+                   
+                    <select id="shippingcountry"  class="form-control" style="min-width:  200px;" #shippingCountryId="ngModel" name="shippingCountryId"  [(ngModel)]="warehouseform.shippingCountryId"  (change)="selectstate($event)" required>
+                        
+                      <option value="" disabled selected>select country</option>
+                      <option *ngFor="let items of country" value="{{items.id}}">{{items.name}}</option>
+                    </select>
+                    <span *ngIf="shippingCountryId.invalid && (shippingCountryId.dirty ||shippingCountryId.touched)">
+                        <span *ngIf="shippingCountryId.errors.required" style="color:red;display:block;position:absolute;">
+                            Country is mandatory
+                        </span>
+                    </span>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="shippingstate">
+                      <span style="color: red">*</span>State:
+                    </label>&nbsp;
+                    <select id="shippingstate" class="form-control" name="shippingStateId" #shippingStateId="ngModel" [(ngModel)]="warehouseform.shippingStateId" style="width:200px;" (change)="selectcity($event)" required>
+                        
+                      <option value="" disabled selected>select state</option>
+                      <option *ngFor="let items of state" value="{{items.id}}">{{items.name}}</option>
+                    </select>
+                    <span *ngIf="shippingStateId.invalid && (shippingStateId.dirty ||shippingStateId.touched)">
+                        <span *ngIf="shippingStateId.errors.required" style="color:red;display:block;position:absolute;">
+                            State is mandatory
+                        </span>
+                    </span>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="shippingcity">
+                      <span style="color: red">*</span> City:
+                    </label>&nbsp;
+                    <select [(ngModel)]="warehouseform.shippingCityId"class="form-control" #shippingCityId="ngModel" name="shippingCityId" style="width:200px;"  required>
+                        
+                      <option value="" disabled selected>select city</option>
+                      <option *ngFor="let items of city" value="{{items.id}}">{{items.name}}</option>
+                    </select>
+                    <span *ngIf="shippingCityId.invalid && (shippingCityId.dirty ||shippingCityId.touched)">
+                        <span *ngIf="shippingCityId.errors.required" style="color:red;display:block;position:absolute;">
+                            City is mandatory
+                        </span>
+                    </span>
+                  </div>
+                </div>
+                <div class="form-row" style="margin-left:-10%;">
+                  <div class="form-group col-md-4">
+                    <label for="shippingemail">
+                      <span style="color: red">*</span>Email:
+                    </label>&nbsp;
+                    <input type="email" class="form-control" name="shippingEmail"  pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" #shippingEmail="ngModel"  [(ngModel)]="warehouseform.shippingEmail" id="shippingemail" required>
+                    <span *ngIf="shippingEmail.invalid && (shippingEmail.dirty ||shippingEmail.touched)">
+                        <span *ngIf="shippingEmail.errors.required" style="color:red;display:block;position:absolute;">
+                            Email is mandatory
+                        </span>
+                    </span>
+                    <span *ngIf="shippingEmail.errors && shippingEmail.errors.pattern">
+                      <span *ngIf="shippingEmail.errors.pattern" style="color:red;display:block;position:absolute;left: 57px;">
+                        EmailId is invalid
+                    </span>
+                    </span>
+
+                  </div>
+                 
+                  <div class="form-group col-md-4">
+                    <label for="shippingcinno">
+                      <span style="color: red">*</span>CIN No:
+                    </label>&nbsp;
+                    <input type="text"class="form-control"  #shippingCINNo="ngModel"
+                      [(ngModel)]="warehouseform.shippingCINNo" name="shippingCINNo" id="shippingcinno" required>
+                    <span *ngIf="shippingCINNo.invalid && (shippingCINNo.dirty ||shippingCINNo.touched)">
+                        <span *ngIf="shippingCINNo.errors.required" style="color:red;display:block;position:absolute;">
+                            Cino is mandatory
+                        </span>
+                    </span>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="gstin">
+                      <span style="color: red">*</span>GSTIN:
+                    </label>&nbsp;
+                    <input type="text"class="form-control" #shippingGSTIN="ngModel" [(ngModel)]="warehouseform.shippingGSTIN"  name="shippingGSTIN" id="gstin" required>
+                    <span *ngIf="shippingGSTIN.invalid && (shippingGSTIN.dirty ||shippingGSTIN.touched)">
+                        <span *ngIf="shippingGSTIN.errors.required" style="color:red;display:block;position:absolute;">
+                            GSTIN is mandatory
+                        </span>
+                    </span>
+                  </div>
+                </div>
+                <div class="form-row" style="margin-left: -20%;">
+                   
+                  <div class="form-group col-md-6">
+                    <label for="shippingadd1">Address1:</label>&nbsp;
+                    <input type="text"class="form-control" size="36" id="shippingadd1"  [(ngModel)]="warehouseform.shippingAddress1"  name="shippingAddress1"
+                      style="margin-right:26px;">
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="shippingadd1">Address2:</label>&nbsp;
+                    <input type="text"class="form-control" size="36" id="shippingadd2"  [(ngModel)]="warehouseform.shippingAddress2"  name="shippingAddress2"
+                      style="min-width: 50%">
+                  </div>
+                </div>
+                <div class="form-row" style="margin-left: -12%;">
+                  <div class="form-group col-md-4">
+                    <label for="shippingpobox">PO Box:</label>&nbsp;
+                    <input type="text" class="form-control"    [(ngModel)]="warehouseform.shippingPOBox"  id="shippingpobox" name="shippingPOBox" style="margin-right: -13px">
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="shippingphone">Phone:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="text"class="form-control" size='16' #shippingPhone="ngModel" pattern="^[0-9]*$" maxlength="10" [(ngModel)]="warehouseform.shippingPhone" name="shippingPhone" id="shippingphone">
+                    <span *ngIf="shippingPhone.invalid && (shippingPhone.dirty ||shippingPhone.touched)&& shippingPhone.length<=10">
+                      <span *ngIf="shippingPhone.errors.maxlength" style="color:red;display:block;position:absolute;">
+                          length should be 10 digits
+                      </span>
+                  </span>
+                  <span *ngIf="shippingPhone.errors && shippingPhone.errors.pattern">
+                    <span *ngIf="shippingPhone.errors.pattern" style="color:red;display:block;position:absolute;left: 57px;">
+                      Invalid Phone No.
+                  </span>
+                  </span>
+                  </div>
+                  <div class="form-group col-md-4">
+                      <label for="alternateshippingemail">
+                       Alternate Email:
+                      </label>&nbsp;
+                      <input type="email" class="form-control" name="alternateShippingEmail"  pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" #alternateshippingEmail="ngModel"  [(ngModel)]="warehouseform.alternateShippingEmail" id="alternateshippingemail" >
+                      <span *ngIf="alternateshippingEmail.errors && alternateshippingEmail.errors.pattern">
+                        <span *ngIf="alternateshippingEmail.errors.pattern" style="color:red;display:block;position:absolute;left: 57px;">
+                          EmailId is invalid
+                      </span>
+                      </span>
+  
+                    </div>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+          <div class="tab-pane fade" id="tab2primary">
+            <fieldset style="width: 107%;margin-top: -50px;margin-left: -31px;">
+              <label style="margin-left:2%" for="billingcheck">
+                <h5>
+                  <span  for="billingcheck" style="color: red">Same as shipping details:</span>
+                </h5>
+              </label>
+              <input type="checkbox"  id="billingcheck" #check (click)="checkevent($event)">
+              <div class="invoicedetails" style="height: 186px">
+
+                <div class="form-row">
+
+                  <div class="form-group col-md-4">
+
+                    <label for="billingcountry">
+                      <span style="color: red">*</span>Country:
+                    </label>&nbsp;
+                    <select id="billingcountry"class="form-control" #billingCountryId="ngModel" name="billingCountryId" style="min-width:  200px;" (change)="selectstate($event)"  [(ngModel)]="warehouseform.billingCountryId" required>
+                    
+                      <option value="" disabled selected>select country</option>
+                      <option *ngFor="let items of country" value="{{items.id}}">{{items.name}}</option>
+                    </select>
+                    <span *ngIf="billingCountryId.invalid && (billingCountryId.dirty ||billingCountryId.touched)">
+                        <span *ngIf="billingCountryId.errors.required" style="color:red;display:block;position:absolute;">
+                            Country is mandatory
+                        </span>
+                    </span>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="billingstate">
+                      <span style="color: red">*</span>State:
+                    </label>&nbsp;
+                    <select id="billingstate"class="form-control" #billingStateId="ngModel" style="width:200px;" name="billingStateId"  [(ngModel)]="warehouseform.billingStateId" (change)="selectcity($event)" required>
+                        
+                      <option value="" disabled selected>select state</option>
+                      <option *ngFor="let items of state" value="{{items.id}}">{{items.name}}</option>
+                    </select>
+                    <span *ngIf="billingStateId.invalid && (billingStateId.dirty ||billingStateId.touched)">
+                        <span *ngIf="billingStateId.errors.required" style="color:red;display:block;position:absolute;">
+                            State is mandatory
+                        </span>
+                    </span>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="billingcity">
+                      <span style="color: red">*</span> City:
+                    </label>&nbsp;
+                    <select id="billingcity"class="form-control" #billingCityId="ngModel" style="width: 200px;" name="billingCityId"  [(ngModel)]="warehouseform.billingCityId" required>
+                        
+                      <option value="" disabled selected>select city</option>
+                      <option *ngFor="let items of city" value="{{items.id}}">{{items.name}}</option>
+                    </select>
+                    <span *ngIf="billingCityId.invalid && (billingCityId.dirty ||billingCityId.touched)">
+                        <span *ngIf="billingCityId.errors.required" style="color:red;display:block;position:absolute;">
+                            City is mandatory
+                        </span>
+                    </span>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-4">
+                    <label for="billingemail">
+                      <span style="color: red">*</span>Email:
+                    </label>&nbsp;
+                    <input type="email"class="form-control" #billingEmail="ngModel"  pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"  id="billingemail" name="billingEmail"  [(ngModel)]="warehouseform.billingEmail" style="margin-left:7%" [value]="(check.checked===true)?warehouseform.shippingEmail:'' " required>
+                    <span *ngIf="billingEmail.invalid && (billingEmail.dirty ||billingEmail.touched)">
+                        <span *ngIf="billingEmail.errors.required" style="color:red;display:block;position:absolute;">
+                            Email is mandatory
+                        </span>
+                    </span>
+                    <span *ngIf="billingEmail.errors && billingEmail.errors.pattern">
+                      <span *ngIf="billingEmail.errors.pattern" style="color:red;display:block;position:absolute;">
+                        EmailId is invalid
+                    </span>
+                    </span>
+
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="billingcinno">
+                      <span style="color: red">*</span>CIN No:
+                    </label>&nbsp;
+                    <input type="text"class="form-control"  #billingCINNo="ngModel" style="margin-left:-8px;" name="billingCINNo"  [(ngModel)]="warehouseform.billingCINNo" id="billingcinno" [value]="(check.checked===true)?warehouseform.shippingCINNo:'' " required>
+                    <span *ngIf="billingCINNo.invalid && (billingCINNo.dirty ||billingCINNo.touched)">
+                        <span *ngIf="billingCINNo.errors.required" style="color:red;display:block;position:absolute;">
+                            CINNo is mandatory
+                        </span>
+                    </span>
+                  </div>
+                  <div class="form-group col-md-4" style="margin-left:-1%;">
+                    <label for="billinggstin">
+                      <span style="color: red">*</span>GSTIN:
+                    </label>&nbsp;
+                    <input type="text"class="form-control" #billingGSTIN="ngModel" id="billinggstin"[value]="(check.checked===true)?warehouseform.shippingGSTIN:'' " name="billingGSTIN"  [(ngModel)]="warehouseform.billingGSTIN" required>
+                    <span *ngIf="billingGSTIN.invalid && (billingGSTIN.dirty ||billingGSTIN.touched)">
+                        <span *ngIf="billingGSTIN.errors.required" style="color:red;display:block;position:absolute;">
+                            GSTIN is mandatory
+                        </span>
+                    </span>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="billingadd1">Address1:</label>&nbsp;
+                    <input type="text"class="form-control" size="36" id="billingadd1" [value]="(check.checked===true)?warehouseform.shippingAddress1:'' "  name="billingAddress1"  [(ngModel)]="warehouseform.billingAddress1" style="margin-right: 26px;">
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="billingadd1">Address2:</label>&nbsp;
+                    <input type="text"class="form-control" size="42" id="billingadd2" [value]="(check.checked===true)?warehouseform.shippingAddress2:'' "  name="billingAddress2"  [(ngModel)]="warehouseform.billingAddress2"
+                      style="min-width: 50%">
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-4" style="margin-left: -7px;">
+                    <label for="billingpobox">PO Box:</label>&nbsp;
+                    <input type="text" class="form-control"  name="billingPOBox"  [value]="(check.checked===true)?warehouseform.shippingPOBox:'' "  [(ngModel)]="warehouseform.billingPOBox" id="billingpobox" style="margin-right: 20px;margin-left: 3%;">
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="billingphone">Phone:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="text" class="form-control" size="16" pattern="^[0-9]*$" maxlength="10" id="billingphone" name="billingPhone" [value]="(check.checked===true)?warehouseform.shippingPhone:'' "  [(ngModel)]="warehouseform.billingPhone"  #billingPhone="ngModel">
+                    <span *ngIf="billingPhone.invalid && (billingPhone.dirty ||billingPhone.touched) && billingPhone.length<=10">
+                      <span *ngIf="billingPhone.errors?.maxlength" style="color:red;display:block;position:absolute;">
+                          length should be 10 digits
+                      </span>
+                  </span>
+                  <span *ngIf="billingPhone.errors && billingPhone.errors.pattern">
+                    <span *ngIf="billingPhone.errors.pattern" style="color:red;display:block;position:absolute;left: 57px;">
+                      Invalid Phone No.
+                  </span>
+                  </span>
+                    <input type="text"  hidden size='36'   name="id" [(ngModel)]="warehouseform.id">
+                    <input type="text"  hidden size='36'   name="userId" [(ngModel)]="warehouseform.userId">
+                  </div>
+                  <div class="form-group col-md-4" style="margin-left:-26px">
+                      <label for="alternatebillingemail">
+                       Alternate Email:
+                      </label>&nbsp;
+                      <input type="email" class="form-control" name="alternateBillingEmail" size="18" pattern="[\w.+-]+@[\w.+-]+\.[a-zA-Z0-9]{2,4}(,\s*)*"  #alternatebillingemail="ngModel"  [(ngModel)]="warehouseform.alternateBillingEmail" id="alternatebillingemail" >
+                      <span *ngIf="alternatebillingemail.errors && alternatebillingemail.errors.pattern">
+                        <span *ngIf="alternatebillingemail.errors.pattern" style="color:red;display:block;position:absolute;left: 57px;">
+                          EmailId is invalid
+                      </span>
+                      </span>
+  
+                    </div>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+        </div>
+      </div>
+
+      <div class="clearfix"></div>
+      <div class="form-row" style="margin-top: -25px;text-align: center;">
+        <div class="form-group">
+          <div class="col-md-6 text-center">
+            <button type="submit" class="btn btn-raised btn-success" [disabled]="warehouse.form.valid?false:true">
+              Save
+              <div class="ripple-container"></div>
+            </button>
+
+          </div>
+          <div class="col-md-6 text-center">
+            <button type="button" class="btn btn-raised btn-dark" (click)="back() ">Back</button>
+          </div>
+        </div>
+      </div>
+    </form>
+    
+  </div>
+  
+   
+</div>
+<div class="row" style="position: relative;
+top: 688px;
+">
+ 
+    <ul class="footer">
+      <li class="pull-left">Copyright &copy; 2018 Limitless Mobility Solutitons Pvt Ltd. All rights reserved.</li>
+      <li class="pull-right">Powered by
+        <a href="http://zoneonedigital.com/" target="_blank">Zone One Digital</a>
+      </li>
+    </ul>
+  
+  
+</div>

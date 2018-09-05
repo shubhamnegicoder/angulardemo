@@ -1,0 +1,154 @@
+
+    
+    <!--/ HEADER Content  -->
+   
+                <!-- bradcome -->
+          
+                <div class="row">
+                    <div class="col-sm-6 col-xs-12">
+                      <h1 class="h3 m-0">Maintain Stock Adjustment</h1>
+                      <small class="text-muted breadcrumb"><a routerLink="/Warehouse">Warehouse</a> » Stock Transfer »<a routerLink="/StockAdjustment">Stock Adjustment</a></small>
+                    </div>
+                    <div class="col-sm-6 col-xs-12 text-right">
+                      <button class="btn btn-raised btn-info pull-right " (click)="toggle()" >
+                        Filter
+                        <div class="ripple-container"></div>
+                      </button>
+                    </div>
+                  </div>
+               
+    
+                <!-- row -->
+                <!-- /row -->
+                <div class="boxs">
+                  <div class="row">
+                    <!-- /Filter Panel-->
+                    <div *ngIf="show">
+                      <div class="boxs-widget filter_block">
+                        <form id="filter">
+                          <div class="col-sm-3">
+    
+                            <label>SA No:</label>
+                            <input type="text" #Name class="form-control"/>
+                          </div>
+    
+                       
+                          <div class="col-sm-3">
+                            <label>Warehouse :</label>
+                            <select class="form-control" #warehouse placeholder="select Country">
+                              <option value=" ">Select Warehouse</option>
+                              <option *ngFor="let data of searchWarehouses" value="{{data.id}}">{{data.name}}</option>
+                            </select>
+                          </div>
+                          <div class="col-sm-3">
+                            <label>Status:</label>
+                            <select class="form-control" #status placeholder="select Country">
+                              <option value=" ">Select Status</option>
+                              <option value="0">Inactive</option>
+                              <option value="1">Active</option>
+                            </select>
+                          </div>
+                         
+                          <div class="col-sm-3">
+                            <label>Date:</label>
+                            <input type="date" #date class="form-control"/>
+                          </div>
+
+                          <div class="clearfix"></div>
+                          <div class="form-group">
+                            <div class="col-sm-12 text-center">
+                              <button type="button" (click)="filteroption(Name.value,warehouse.value,status.value,date.value)" class="btn btn-raised btn-danger">
+                                Search
+                               </button>
+                              <button type="reset"  class="btn btn-raised btn-default">Reset</button>
+                            </div>
+                          </div>
+                        </form>
+                        <div class="clearfix"></div>
+                        <hr />
+                      </div>
+                    </div>
+                    <!--End/.-->
+                    <div class="col-md-12">
+                      <div class="boxs-widget">
+                        <div class="row">
+                          <div class="col-md-6"> <a routerLink="Addstock" class="btn btn-success btn-raised" >Add Stock</a>
+                           </div>
+                          <div class="col-md-6 text-right pagestatus">
+                            <small class="text-muted">
+                              Per page
+                              <select (change)="optionpage($event)">
+                                <option>10</option>
+                                <option>25</option>
+                                <option>50</option>
+                              </select>
+                              showing <strong class="text-darkgray">{{(pageNo*pageSize)-(pageSize-1)}}</strong> to <strong class="text-darkgray">{{pageNo*pageSize>=totalRecords?totalRecords:pageNo*pageSize}}</strong> of <strong class="text-darkgray">{{totalRecords}}</strong>
+                            </small>
+                          </div>
+                          <div class="clearfix"></div>
+                        </div>
+                      </div>
+                      <div class="boxs-body">
+                        <div class="table-responsive">
+                          <table class="table mb-0 table-striped" id="usersList">
+                            <thead>
+                              <tr class=" bg-lightgray" style="text-align: center">
+                                <th class="text-darkgray">TO No</th>
+                                <th class="text-darkgray">Date</th>
+                                <th class="text-darkgray">Warehouse</th>
+                                <th class="text-darkgray">Status</th>
+                                <th class="text-darkgray" style="text-align: center;width:9%" >Action</th>
+                              </tr>
+                            </thead>
+                            <tbody *ngIf="listDetail==null"><tr><td colspan="6" style="text-align:center">No Record Found....</td></tr></tbody>
+    
+                            <tbody *ngIf="listDetail!=null">
+                            <tr *ngFor=' let po of listDetail'>
+                              <td>{{po.code}}</td> 
+                              <td>{{po.date | date: 'dd MMM, yyyy'}}</td>
+                              <td>{{po.toWHName}}</td>
+                              <td>{{po.status==1?"Open":po.status==2?"Released":po.status==3?"Closed":""}}</td>
+                             <td style="text-align: right;">
+                                
+                              <a [routerLink]="['Editstockadjustment',po.transferOrderId]" class="p-5 text-blue" [ngClass]="{disabled:po.status>1}" >
+                                <i class="fa fa-pencil-square-o" aria-hidden="true" style="font-size:20px" data-toggle="tooltip" title="Click here to edit"></i>
+                              </a>
+                              <a [routerLink]="['viewstockadjustment',po.transferOrderId]"  class="p-5 text-blue">
+                                  <i class="fa fa-eye" aria-hidden="true"  data-toggle="tooltip" title="Click here to view" style="font-size:20px"></i>
+                                </a>
+                               
+                              </td>
+                            </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                      <!-- /boxs body -->
+                      <!-- boxs footer -->
+                      <div class="boxs-footer dvd dvd-top">
+                        <div class="row">
+                          <div class="col-md-12 text-right">
+                            <ul role="button" *ngIf="pager.pages && pager.pages.length" class="pagination">
+                 
+                              <li [ngClass]="{disabled:pager.currentPage === 1}">
+                                <a (click)="setPage(pager.currentPage - 1)"> <i class="fa fa-chevron-left"></i></a>
+                              </li>
+                              <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                                <a (click)="setPage(page)">{{page}}</a>
+                              </li>
+                              <li>
+                                <button class="button" [ngClass]="{'disabled':pager.currentPage === pager.totalPages}" [disabled]="pager.currentPage === pager.totalPages" style="min-height: 5px !important" (click)="setPage(pager.currentPage + 1)"> <i class="fa fa-chevron-right"></i></button>
+                              </li>
+    
+                            </ul>
+                          </div>
+                          </div></div>
+                          <!-- /boxs footer -->
+                        </div>
+                      </div>
+                    </div>
+                    <ul class="footer">
+                        <li class="pull-left">Copyright &copy; 2018 Limitless Mobility Solutitons Pvt Ltd. All rights reserved.</li>
+                        <li class="pull-right">Powered by <a href="http://zoneonedigital.com/" target="_blank">Zone One Digital</a></li>
+                      </ul>
+              

@@ -1,0 +1,173 @@
+<!-- bradcome -->
+
+<div class="row">
+  <div class="col-sm-6 col-xs-12">
+    <h1 class="h3 m-0">Transfer Order</h1>
+    <small class="text-muted breadcrumb">
+      <a routerLink="/Warehouse">Warehouse</a> »
+      Stock Transfer » Transfer Order</small>
+  </div>
+  <div class="col-sm-6 col-xs-12 text-right">
+    <button class="btn btn-raised btn-info pull-right " (click)="toggle()">
+      Filter
+      <div class="ripple-container"></div>
+    </button>
+  </div>
+</div>
+
+
+<!-- row -->
+<!-- filter -->
+<!-- #################################################################### -->
+<div class="boxs">
+  <div class="row">
+    <!-- /Filter Panel-->
+    <div *ngIf="show">
+      <div class="boxs-widget filter_block">
+        <form>
+          <div class="col-sm-3">
+            <label>TO No:</label>
+            <input type="text" #TO class="form-control" placeholder=" Enter PO No" />
+          </div>
+          
+          <div class="col-sm-3">
+            <label>Date:</label>
+            <input type="date" #dateto class="form-control" placeholder="Enter Date">
+          </div>
+          <div class="col-sm-3">
+            <label>From Location:</label>
+            <select class="form-control" #flocation (change)="selectdata2($event)">
+              <option value=" ">Select</option>
+              <option *ngFor="let data of filterDetails" value="{{data.id}}">{{data.name}}</option>
+            </select>
+          </div>
+          <div class="col-sm-3">
+            <label>To Location:</label>
+            <select class="form-control" #tlocation placeholder="select Country">
+              <option value=" ">Select</option>
+              <option *ngFor="let data of filterDetails" value="{{data.id}}">{{data.name}}</option>
+            </select>
+          </div>
+          <div class="col-sm-3">
+            <label>Status:</label>
+            <select class="form-control" #status placeholder="select Country">
+              <option value=" ">Select status</option>
+              <option value="1">Open</option>
+              <option value="3">Closed</option>
+              <option value="4">Cancelled</option>
+            </select>
+          </div>
+
+                      <div class="clearfix"></div>
+                      <div class="form-group">
+                        <div class="col-sm-12 text-center">
+                          <button type="button" (click)="filterOption(TO.value,flocation.value,tlocation.value,status.value,dateto.value)" class="btn btn-raised btn-danger">
+                            Search
+                            <div class="ripple-container"></div>
+                          </button>
+                          <button (click)="resetfunction($event)" class="btn btn-raised btn-default">Reset</button>
+                        </div>
+                      </div>
+                    </form>
+                    <div class="clearfix"></div>
+                    <hr />
+                  </div>
+                </div>
+                <!--End/.-->
+                <div class="col-md-12">
+                  <div class="boxs-widget">
+                    <div class="row">
+                      <div class="col-md-6"> <a class="btn btn-success btn-raised" routerLink="CreateTo">Add New</a>  </div>
+                      <div class="col-md-6 text-right pagestatus">
+                        <small class="text-muted">
+                          Per page
+                          <select (change)="optionpage($event)">
+                            <option>10</option>
+                            <option>25</option>
+                            <option>50</option>
+                          </select>
+                          showing <strong class="text-darkgray">{{(pageNo*pageSize)-(pageSize-1)}}</strong> to <strong class="text-darkgray">{{pageNo*pageSize>=totalRecords?totalRecords:pageNo*pageSize}}</strong> of <strong class="text-darkgray">{{totalRecords}}</strong>
+                        </small>
+                      </div>
+                      <div class="clearfix"></div>
+                    </div>
+                  </div>
+                  <div class="boxs-body">
+                    <div class="table-responsive">
+                      <table class="table mb-0 table-striped" id="usersList">
+                        <thead>
+                          <tr class=" bg-lightgray">
+                            <th class="text-darkgray">TO No</th>
+                            <th class="text-darkgray">Date</th>
+                            <th class="text-darkgray">From Location</th>
+                            <th class="text-darkgray">To Location</th>
+                            <th class="text-darkgray">Status</th>
+                            <th class="text-darkgray" style="text-align: center;width:11%">Action</th>
+                          </tr>
+                        </thead>
+                        <tbody *ngIf="listDetail==null"><tr><td colspan="5" style="text-align:center">No Record Found....</td></tr></tbody>
+                        <tbody *ngIf="listDetail!=null">
+                          <tr *ngFor=' let to of listDetail'>
+                            <td>{{to.code}}</td>
+                            <td>{{to.date | date: 'dd MMM, yyyy'}}</td>
+                            <td>{{to.fromWHName}}</td>
+                            <td>{{to.toWHName}}</td>
+                            <td>{{to.status==1?"Open":to.status==3?"Closed":"Cancelled"}}</td>
+                            <td style="text-align:right">
+                                <a class="p-5 text-blush" [ngClass]="{disabled:to.status==1 || to.status==2}" [ngClass]="{disabled:to.status==2}" (click)="printToPdf(to.transferOrderId)" role="button">
+                                  <i class="fa fa-print" aria-hidden="true" style="font-size:20px"></i>
+                                </a>
+                                <a class="p-5 text-blue" role="button" [routerLink]="['editTo',to.transferOrderId]">
+                                  <i class="fa fa-eye" aria-hidden="true" style="font-size:20px"></i>
+                                </a>
+                                <a class="p-5 text-blue" [ngClass]="{disabled:to.status==2 || to.status==3}" [routerLink]="['editTo',to.transferOrderId]">
+                                  <i class="fa fa-pencil-square-o"aria-hidden="true" style="font-size:20px"></i>
+                                </a>
+                              </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <!-- /boxs body -->
+                  <!-- boxs footer -->
+                  <div class="boxs-footer dvd dvd-top">
+                    <div class="row">
+                      <div class="col-md-12 text-right">
+                        <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+                          <!--<li [ngClass]="{disabled:pager.currentPage === 1}">
+                            <a (click)="setPage(1)">First</a>
+                          </li>-->
+              <li [ngClass]="{disabled:pager.currentPage === 1}" role="button">
+                <a (click)="setPage(pager.currentPage - 1)">
+                  <i class="fa fa-chevron-left"></i>
+                </a>
+              </li>
+              <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}" role="button">
+                <a (click)="setPage(page)">{{page}}</a>
+              </li>
+              <li>
+                <button class="button" [ngClass]="{'disabled':pager.currentPage === pager.totalPages}" [disabled]="pager.currentPage === pager.totalPages"
+                  style="min-height: 5px !important" (click)="setPage(pager.currentPage + 1)">
+                  <i class="fa fa-chevron-right"></i>
+                </button>
+              </li>
+
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- /boxs footer -->
+    </div>
+  </div>
+</div>
+
+<!-- Footer-->
+<ul class="footer">
+  <li class="pull-left">Copyright &copy; 2018 Limitless Mobility Solutitons Pvt Ltd. All rights reserved.</li>
+  <li class="pull-right">Powered by
+    <a href="http://zoneonedigital.com/" target="_blank">Zone One Digital</a>
+  </li>
+</ul>
+
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="medium" color="#f3903f" type="ball-triangle-path"></ngx-spinner>

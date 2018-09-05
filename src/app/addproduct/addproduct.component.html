@@ -1,0 +1,544 @@
+
+<div class="row">
+    <div class="col-sm-6 col-xs-12">
+      <h1 class="h3 m-0"> Add Product</h1>
+      <small class="text-muted breadcrumb">Product Catelogue » <a routerLink="/Product" >Product</a> » <a routerLink="/addProduct">Add Product</a></small>
+   <br><br>
+
+    </div>
+
+</div>
+  <div class="boxs">
+      <div class="row">
+        <div class="col-md-12">
+<div class="boxs-body" style="margin-left:30px;margin-right:50px">
+      <form #F1="ngForm" class="form-horizontal" role="form" (ngSubmit)="F1.form.valid && onSubmit()">
+            <p class="text-right">
+                    (<span class="text-red">*</span>) indicates mandatory fields</p>
+                        <div class="col-sm-6">
+                            <div class="form-group is-empty">
+                                <label for="input01" class="col-sm-3 control-label"><sup class="text-red">*</sup>Product Name </label>
+                                <div class="col-sm-8">
+                                    <input type="text" value="" class="form-control" name="name" #name="ngModel" [(ngModel)]="prod.name" required>
+                                </div>
+                               
+                            <span class="material-input"></span>
+                            <div *ngIf="name.invalid && (name.dirty || name.touched)">
+
+                                 <div *ngIf="name.errors.required" style="color:red;float:right;margin-right:50px">
+                                                    Name is required.
+                                </div>
+                            </div>
+                        </div>
+                            <div class="form-group is-empty">
+                                <label for="input01" class="col-sm-3 control-label"><sup class="text-red">*</sup>Brand  </label>
+                                <div class="col-sm-8">
+                                        <select class="form-control" [(ngModel)]="prod.brandId" required #brandId="ngModel" placeholder="select brand" name="brandId" (change)="selectBrand($event)">
+                                            <option value="">Select</option> 
+                                            <option *ngFor="let data of brandList" value="{{data.id}}">
+                                                  {{data.name}}
+                                              </option>
+                                            </select>
+                                            <span *ngIf="brandId.invalid && (brandId.dirty || brandId.touched)">
+          
+                                                <span *ngIf="brandId.errors.required" style="color:red;float:right;margin-right:-9px">
+                                                  brand is required.
+                                                </span>
+                                              </span>
+                                </div>
+                                <div class="col-sm-1 p-5">
+                                    <a class="text-success" data-toggle="modal" data-target="#brandModal"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                                </div>
+                            <span class="material-input"></span></div>
+                            <div class="form-group is-empty">
+                                <label for="input01" class="col-sm-3 control-label"><sup class="text-red">*</sup>Category</label>
+                                <div class="col-sm-8">
+                                    <select [(ngModel)]="prod.categoryId" #categoryId="ngModel" name="categoryId" class="form-control" (change)="selectCategory($event)" required>
+                                        <option value="" selected>Select</option>
+                                        <option *ngFor="let cat of categoryList" value="{{cat.id}}">
+                                            {{cat.name}}
+                                        </option>
+                                    </select>
+                                  
+                                </div>
+                                <div class="col-sm-1 p-5">
+                                    <a data-toggle="modal" data-target="#categoryModal" class="text-success"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                                </div>
+                            <span class="material-input"></span>
+                            <span *ngIf="categoryId.invalid && (categoryId.dirty || categoryId.touched)">
+          
+                                <span *ngIf="categoryId.errors.required" style="color:red;margin-right:-9px;float:right">
+                                  category is required.
+                                </span>
+                              </span>
+                        </div>
+                            <div class="form-group is-empty">
+                                <label for="input01" class="col-sm-3 control-label"><sup class="text-red">*</sup>Department</label>
+                                <div class="col-sm-8">
+                                    <select [(ngModel)]="prod.departmentId" #departmentId="ngModel" name="departmentId" class="form-control" required>
+                                        <option value="" selected disabled>Select</option>
+                                        <option *ngFor="let dept of departmentList" value="{{dept.id}}">
+                                            {{dept.name}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-1 p-5">
+                                    <a data-toggle="modal" data-target="#departmentModal"class="text-success"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                                </div>
+                            <span class="material-input"></span>
+                        
+                            <span *ngIf="departmentId.invalid && (departmentId.dirty || departmentId.touched)">
+          
+                                <span *ngIf="departmentId.errors.required" style="color:red;float:right;margin-right:-9px;">
+                                  Department is required.
+                                </span>
+                              </span>
+                        </div>
+                            <div class="form-group is-empty">
+                                <label for="input01" class="col-sm-3 control-label"><sup class="text-red">*</sup>Product Type </label>
+                                <div class="col-sm-8">
+                                    <select [(ngModel)]="prod.itemTypeId" #itemTypeId="ngModel" name="itemTypeId" class="form-control" required>
+                                           <option value="" selected>Select</option>
+                                            <option *ngFor="let pType of productTypeList" value="{{pType.id}}">
+                                                    {{pType.name}}
+                                                </option>
+                                    </select>    
+                                </div>
+                                <div class="col-sm-1 p-5">
+                                    <a data-toggle="modal" data-target="#prodTypeModal" class="text-success"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                                </div>
+                            <span class="material-input"></span>
+                            <span *ngIf="itemTypeId.invalid && (itemTypeId.dirty || itemTypeId.touched)">
+          
+                                <span *ngIf="itemTypeId.errors.required" style="color:red;float:right;margin-right:-9px;">
+                                  Product Type is required.
+                                </span>
+                              </span>
+                        </div>
+                            <div class="form-group is-empty">
+                                <label for="input01" class="col-sm-3 control-label">Barcode</label>
+                                <div class="col-sm-8">
+                                    <input type="text" value="" class="form-control">
+                                </div>
+                               
+                            <span class="material-input"></span></div>
+                           
+                           </div>
+                           <div class="col-sm-6">
+                            <div class="form-group is-empty">
+                                <label for="input01" class="col-sm-3 control-label"><sup class="text-red">*</sup>MRP</label>
+                                <div class="col-sm-8">
+                                    <input type="text" value="" class="form-control" required [(ngModel)]="prod.price" name="price" #price="ngModel">
+                                </div>
+                              
+                            <span class="material-input"></span>
+                        
+                            <div *ngIf="price.invalid && (price.dirty || price.touched)">
+
+                                <div *ngIf="price.errors.required" style="color:red;float: right;margin-right:50px">
+                                        MRP is required.
+                                </div>
+                               </div>
+                        </div>
+                            <div class="form-group is-empty">
+                                <label for="input01" class="col-sm-3 control-label">Sub Brand</label>
+                                <div class="col-sm-8">
+                                        <select [(ngModel)]="prod.subBrandId" #subBrandId="ngModel"  name="subBrandId" class="form-control">
+                                            <option value="" selected="selected">Select</option>
+                                                <option *ngFor="let sb of subBrandList" value="{{sb.id}}">
+                                                        {{sb.name}}
+                                                    </option>
+                                            </select>
+                                </div>
+                                <div class="col-sm-1 p-5">
+                                    <a data-toggle="modal" data-target="#subBrandModal" class="text-success"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                                </div>
+                            <span class="material-input"></span></div>
+                            <div class="form-group is-empty">
+                                <label for="input01" class="col-sm-3 control-label">Sub Category</label>
+                                <div class="col-sm-8">
+                                    <select [(ngModel)]="prod.subCategoryId"  #subCategoryId="ngModel" name="subCategoryId" class="form-control">
+                                        <option value="" selected>select</option>
+                                        <option *ngFor="let sc of subCategoryList" value="{{sc.id}}">{{sc.name}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-1 p-5">
+                                    <a data-toggle="modal" data-target="#subCategoryModal" class="text-success"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                                </div>
+                            <span class="material-input"></span></div>
+                            <div class="form-group is-empty">
+                                <label for="input01" class="col-sm-3 control-label"><sup class="text-red">*</sup>Company</label>
+                                <div class="col-sm-8">
+                                    <select [(ngModel)]="prod.companyId" #companyId="ngModel" name="companyId" class="form-control" required>
+                                            <option value="">Select</option>
+                                            <option *ngFor="let c of companyList" value="{{c.id}}">
+                                                    {{c.name}}
+                                                </option>
+                                        </select>
+                                </div>
+                                <div class="col-sm-1 p-5">
+                                    <a data-toggle="modal" data-target="#companyModal"class="text-success"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                                </div>
+                            <span class="material-input"></span>
+                            <span *ngIf="companyId.invalid && (companyId.dirty || companyId.touched)">
+          
+                                <span *ngIf="companyId.errors.required" style="color:red;float:right;margin-right:-9px;">
+                                  Company is required.
+                                </span>
+                              </span>
+                        </div>
+                            <!-- <div class="form-group is-empty">
+                                <label for="input01" class="col-sm-3 control-label"><sup class="text-red">*</sup>UOM </label>
+                                <div class="col-sm-8">
+                                    <select #uom class="form-control">
+                                            <option *ngFor="let u of uomList" value="{{u.id}}">
+                                                    {{u.name}}
+                                                </option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-1 p-5">
+                                    <a data-toggle="modal" data-target="#uomModal" class="text-success"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                                </div>
+                            <span class="material-input"></span></div> -->
+                           
+                            <div class="form-group is-empty">
+                                <label for="input01" class="col-sm-3 control-label"><sup class="text-red">*</sup>HSN Code</label>
+                                <div class="col-sm-8">
+                                    <input type="text" value="" class="form-control" name="hsnCode" [(ngModel)]="prod.hsnCode" #hsnCode="ngModel" required>
+                                </div>
+                               
+
+                            <span class="material-input"></span>
+                            <div *ngIf="hsnCode.invalid && (hsnCode.dirty || hsnCode.touched)">
+
+                                <div *ngIf="hsnCode.errors.required" style="color:red;float: right;margin-right:50px">
+                                        HSNCode  is required.
+                                </div>
+                               </div>
+                        </div>
+                            <div class="form-group is-empty">
+                                    <label for="input01" class="col-sm-3 control-label"><sup class="text-red">*</sup>Tax</label>
+                                    <div class="col-sm-8">
+                                        <select [(ngModel)]="prod.taxId" #taxId="ngModel" name="taxId" class="form-control" required>
+                                            <option value="" selected disabled>Select</option>
+                                                <option *ngFor="let t of taxList" value="{{t.id}}">
+                                                        {{t.name}}
+                                                    </option>
+                                            </select>
+                                    </div>
+                                    <div class="col-sm-1 p-5">
+                                        <a data-toggle="modal" data-target="#taxModal" class="text-success"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                                    </div>
+                                <span class="material-input"></span>
+                                <span *ngIf="taxId.invalid && (taxId.dirty || taxId.touched)">
+          
+                                    <span *ngIf="taxId.errors.required" style="color:red;float:right;margin-right:-9px;">
+                                      Tax is required.
+                                    </span>
+                                  </span>
+                            </div>
+                           </div>
+                <div class="clearfix"></div>
+                <div class="form-group">
+                                <div class="col-md-12 text-center">
+                                    <button type="submit" class="btn btn-success btn-raised">Save</button>
+                                    <button type="reset" class="btn btn-raised btn-warning">Back</button>
+                                   
+                                </div>
+                            </div>
+                        </form>
+                       <div class="modal fade" id="brandModal" role="dialog" data-dismiss="modal" #closeBtn>
+                        <div class="modal-dialog">
+                
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Add Brand</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                                            
+                                                            <input type="text" value="" class="form-control" placeholder="Enter Name" #brandName></div>
+                                </div>
+                                <div class="modal-footer">
+                                
+                               
+                                                        <div class="col-md-12">
+                                                            <button type="submit" class="btn btn-success btn-raised" (click)="createBrand(brandName.value)">Save</button>
+                                                            <button type="reset" class="btn btn-raised btn-warning" data-dismiss="modal">Cancel</button>
+                                                       
+                                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                
+                        <!-- <div class="modal fade" id="brandModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                              <div class="modal-content" style="width:335px ;height:180px">
+                                <div class="modal-header">      
+                                  <h4 class="modal-title"id="exampleModalLongTitle" style="font-weight: bold">Add Brand</h4>
+                                </div>
+                                <div class="modal-body" style="font-size:15px;width:50px">
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                        <div class="card-body-modal">
+                                          <input type="text" placeholder="Enter Name" style="font-size:15px;width:300px">
+                                        </div>
+                                      </div>
+                                </div>
+                                <div>
+                                  <div style="margin-left:30px">
+                                  <button type="button" class="btn btn-danger" style="margin-left:136px;margin-top:10px">Save</button>
+                                  <button type="button" class="btn btn"  data-dismiss="modal"style="margin-left:200px; margin-top:-60px">Cancel</button>
+                                  </div>
+                                  
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          </div> -->
+    </div>
+                      <div class="modal fade" id="subBrandModal" role="dialog" #closeBtn1>
+                        <div class="modal-dialog">
+                
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Add SubBrand</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group col-sm-6">
+                                                     
+                                                            
+                                                            <input type="text" value="" class="form-control" placeholder="Enter SubBrand Name" name="subBrandName" #subBrandName>
+                                      </div>
+                                      <div class="form-group col-sm-6">                 
+                                                            <input type="text" class="form-control" [ngModel]="selectedBrandName"  disabled/>
+                                                            <!-- <select value="" class="form-control"  name="brand" #brand>
+                                                                <option value="">Select Brand</option>
+                                                                <option *ngFor="let b of brandList" value="{{b.id}}">{{b.name}}</option>
+                                                            </select> -->
+                                                        </div>
+                                </div>
+                                <div class="modal-footer">
+                                
+                               
+                                                        <div class="col-md-12">
+                                                            <button type="submit" class="btn btn-success btn-raised" (click)="createSubBrand(subBrandName.value)">Save</button>
+                                                            <button type="reset" class="btn btn-raised btn-warning" data-dismiss="modal">Cancel</button>
+                                                       
+                                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                
+                        <!-- <div class="modal fade" id="brandModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                              <div class="modal-content" style="width:335px ;height:180px">
+                                <div class="modal-header">      
+                                  <h4 class="modal-title"id="exampleModalLongTitle" style="font-weight: bold">Add Brand</h4>
+                                </div>
+                                <div class="modal-body" style="font-size:15px;width:50px">
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                        <div class="card-body-modal">
+                                          <input type="text" placeholder="Enter Name" style="font-size:15px;width:300px">
+                                        </div>
+                                      </div>
+                                </div>
+                                <div>
+                                  <div style="margin-left:30px">
+                                  <button type="button" class="btn btn-danger" style="margin-left:136px;margin-top:10px">Save</button>
+                                  <button type="button" class="btn btn"  data-dismiss="modal"style="margin-left:200px; margin-top:-60px">Cancel</button>
+                                  </div>
+                                  
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          </div> -->
+    </div>
+   
+<div class="modal fade" id="categoryModal" role="dialog"  data-dismiss="modal" #closeBtn2>
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add Category</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                                        <input type="text" value="" class="form-control" placeholder="Enter Name" #categoryName></div>
+            </div>
+            <div class="modal-footer">
+            
+           
+                                    <div class="col-md-12">
+                                        <button type="button" class="btn btn-success btn-raised" (click)="createCategory(categoryName.value)">Save</button>
+                                        <button type="reset" class="btn btn-raised btn-warning" data-dismiss="modal">Cancel</button>
+                                   
+                                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+  <div class="modal fade" id="subCategoryModal" role="dialog" data-dismiss="modal" #closeBtn3>
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add Sub Category</h4>
+            </div>
+            <div class="modal-body" style="padding:0px 24px 100px 24px">
+                <div class="form-group col-sm-6">
+                     
+                                        <input type="text" value="" class="form-control" placeholder="Enter Name" #subCatName>
+                  </div>
+                    <div class="form-group col-sm-6">
+                           <input type="text" [ngModel]="selectedCategoryName" disabled/>
+                        
+                        <!-- <select class="form-control" #category>
+                          <option value="-1">Select </option>
+                          <option *ngFor="let data of categoryList" value="{{data.id}}">{{data.name}}</option>
+                        </select> -->
+                      </div>
+             </div>
+            <div class="modal-footer">
+            
+           
+                                    <div class="col-md-12">
+                                        <button type="button" class="btn btn-success btn-raised"  (click)="createSubCategory(subCatName.value)">Save</button>
+                                        <button type="reset" class="btn btn-raised btn-warning" data-dismiss="modal">Cancel</button>
+                                   
+                                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="modal fade" id="departmentModal" role="dialog" data-dismiss="modal" #closeBtn4>
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Add Department</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                                            <input type="text" value="" class="form-control" placeholder="Enter Name" #depName></div>
+                </div>
+                <div class="modal-footer">
+                
+               
+                                        <div class="col-md-12">
+                                            <button type="button" class="btn btn-success btn-raised" (click)="createDepartment(depName.value)">Save</button>
+                                            <button type="reset" class="btn btn-raised btn-warning" data-dismiss="modal">Cancel</button>
+                                       
+                                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        <div class="modal fade" id="companyModal" role="dialog" data-dismiss="modal" #closeBtn5>
+            <div class="modal-dialog">
+    
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Add Company</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                                                <input type="text" value="" class="form-control" placeholder="Enter Name" #compName></div>
+                    </div>
+                    <div class="modal-footer">
+                    
+                   
+                                            <div class="col-md-12">
+                                                <button type="button" class="btn btn-success btn-raised" (click)="createCompany(compName.value)">Save</button>
+                                                <button type="reset" class="btn btn-raised btn-warning" data-dismiss="modal">Cancel</button>
+                                           
+                                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+
+            <div class="modal fade" id="taxModal" role="dialog" data-dismiss="modal" #closeBtn6>
+                <div class="modal-dialog">
+        
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Add Tax</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group col-sm-6">
+                                    <label>Name:</label>
+                                      <input type="text" value="" class="form-control" placeholder="Enter Name" #taxName>
+                            </div> 
+                            <div class="form-group col-sm-6">
+                                    <label>Tax:</label>
+                                      <input type="text" value="" class="form-control" placeholder="Enter Tax" #tax>
+                            </div>
+                            <div class="form-group col-sm-6">
+                                      <label>Cess</label>
+                                        <input type="text" value="" class="form-control" placeholder="Enter Cess" #cess>
+                                </div>
+                        </div>
+                        <div class="modal-footer">
+                        
+                       
+                                                <div class="col-md-12">
+                                                    <button type="button" class="btn btn-success btn-raised" >Save</button>
+                                                    <button type="reset" class="btn btn-raised btn-warning" data-dismiss="modal">Cancel</button>
+                                               
+                                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+
+                <div class="modal fade" id="prodTypeModal" role="dialog" data-dismiss="modal" #closeBtn7>
+                    <div class="modal-dialog">
+            
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Add Product Type</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                                        <input type="text" value="" class="form-control" placeholder="Enter Name" #prodTypeNamee></div>
+                            </div>
+                            <div class="modal-footer">
+                            
+                           
+                                                    <div class="col-md-12">
+                                                        <button type="button" class="btn btn-success btn-raised" (click)="createProductType(prodTypeNamee.value)">Save</button>
+                                                        <button type="reset" class="btn btn-raised btn-warning" data-dismiss="modal">Cancel</button>
+                                                   
+                                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    </div>
+    </div>
+</div>
+</div>
+
+<ul class="footer" >
+    <li class="pull-left">Copyright &copy; 2018 Limitless Mobility Solutitons Pvt Ltd. All rights reserved.</li>
+    <li class="pull-right">Powered by <a href="http://zoneonedigital.com/" target="_blank">Zone One Digital</a></li>
+</ul>

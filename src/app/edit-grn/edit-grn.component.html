@@ -1,0 +1,282 @@
+<!--/ HEADER Content  --> 
+<div class="row">
+    <div class="col-sm-6 col-xs-12">
+        <h1 class="h3 m-0">GRN</h1>
+        <small class="text-muted breadcrumb">
+          <a routerLink="/Warehouse">Warehouse</a> »
+          Inbound<a routerLink="/GRN">» GRN</a>» <a routerLink="EditGrn">Edit Grn</a> </small>
+    </div>
+<div class="card"  style="min-height:550px;margin-right:40px;margin-top:1%;width:96%;margin-left:20px">
+    <h4 class="card-title" style="color: green;padding:2%">Edit GRN</h4>
+    <div class="card-body" style="margin-left: 0px; margin-right: -290px;">
+    <p style="color:black;font-size:14px;margin-left: 62%;">(<span style="color:red;">*</span>) indicates mandatory fields</p>
+    <form>
+      <div class="form-row">
+        <div class="form-group col-md-3">
+          <label >
+            <span style="color: red">*</span>Warehouse
+          </label>
+          <input type="text" value="{{listToEdit.warehouseName}}" class="form-control" disabled>
+        </div>
+        <div class="form-group col-md-3">
+          <label >
+            <span style="color: red">*</span>Vendor
+          </label>
+          <input type="text" value="{{listToEdit.vendorName}}" class="form-control" disabled>
+        </div>
+        <div class="form-group col-md-3">
+          <label >
+            <span style="color: red">*</span>PO
+          </label>
+          <input type="text" value="{{listToEdit.poCode}}" class="form-control" disabled>
+        </div>
+      </div>
+      <div class="form-group col-md-3">
+        <label >
+          <span style="color: red">*</span>Invoice No
+        </label>
+        <input type="text" class="form-control" value="{{listToEdit.invoiceNo}}" disabled>
+      </div>
+      <div class="form-group col-md-3">
+        <label >
+          <span style="color: red">*</span>Invoice Date
+        </label>
+        <input type="text" class="form-control" value="{{listToEdit.invoiceDate | date:'dd MMM, yyyy'}}" disabled>
+     
+    </div>
+    <div class="clearfix"></div>
+
+    <div class="form-row">
+      <div class="form-group col-md-3">
+        <label >
+          Total Qty
+        </label>
+        <input type="hidden" value="{{quantity}}" #quantity1>
+        <input type="text" class="form-control" value="{{quantity1.value}}" #poquantity disabled>
+      </div>
+      <div class="form-group col-md-3">
+        <label>
+          <input type="hidden" value="{{amount1}}" #totalAmount1> Total Amount
+        </label>
+        <input type="text" class="form-control" value="{{totalAmount1.value | number:'0.2'}}" #amount disabled>
+      </div>
+      <div class="form-group col-md-3" *ngIf="!released">
+        <label>
+          Status
+        </label>
+        <input type="text" class="form-control" *ngIf="listToEdit.status === '1'" value="Open" disabled>
+      </div>
+      <div *ngIf="released">
+        <div class="form-group col-md-3">
+          <label>
+            Status
+          </label>
+          <input type="text" class="form-control" *ngIf="status==='3'" value="Closed" disabled>
+        </div>
+        <div class="clearfix"></div>
+        <div class="form-group col-md-3">
+          <label>
+            <span style="color: red">*</span>Released By
+          </label>
+          <input type="text" class="form-control" value="{{releaseBy}}" disabled>
+        </div>
+        <div class="form-group col-md-3">
+          <label>
+            <span style="color: red">*</span>Released On
+          </label>
+          <input type="text" class="form-control" value="{{releaseDate | date:'dd MMM, yyyy'}}" disabled>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+    <button type="button" class="btn btn-raised btn-success" data-toggle="tooltip" title="Click here to release" *ngIf="!released"
+      (click)="release()">Release</button>
+    <div class="clearfix"></div>
+    <div class="boxs-body">
+      <div>
+        <h4 class="card-title">
+          Items
+          <button type="button" class="btn btn-raised btn-info" data-toggle="modal" title="Click here" data-target="#myModal" style="margin-left: 670px"
+            *ngIf="!released">Add Item</button>
+        </h4>
+      </div>
+      <div class="table-responsive" style="width:880px;background-color:white;">
+        <table class="table mb-0 table-striped" id="myTable">
+          <thead>
+            <tr class=" bg-lightgray">
+              <th class="text-darkgray">HSN</th>
+              <th class="text-darkgray">Name</th>
+              <th class="text-darkgray">MRP</th>
+              <th class="text-darkgray">PO Qty</th>
+              <th class="text-darkgray">Inward Qty</th>
+              <th class="text-darkgray">Base</th>
+              <th class="text-darkgray">Amount (₹​)</th>
+              <th class="text-darkgray">Expiry Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let list of listToEdit1;let i=index">
+              <td>{{list.hsnCode}}</td>
+              <td>
+                <input type="hidden" id="{{'itemId_'+i}}" value="{{list.itemId}}">{{list.itemName}}</td>
+              <input type="hidden" value="{{list.conversion}}" #conversion>
+              <td>{{list.price | number:'0.2'}}</td>
+              <td style="text-align:center">
+                <input type="text" value="{{list.poQuantity}}" style="width:50px;" id="{{'po_qty'+i}}" disabled>
+              </td>
+              <input type="hidden" value="{{list.basePrice}}" #base>
+              <td>
+                <input type="number" id="{{'inwrdqty_'+i}}" style="width:50px;" [attr.disabled]="released ? 'disabled' : null" (keyup)="keyUpQty($event,list.conversion,list.basePrice)"
+                  name="{{'quantity'+i}}" [(ngModel)]="list.quantity" (change)="change($event)" value="{{list.quantity}}"
+                  width="10px" min=0 oninput="validity.valid||(value='');">
+                <td>{{list.basePrice| number:'0.2'}}</td>
+                <td>
+                  <input type="text" style="width:80px;" value="{{list.netAmount | number:'0.2'}}" id="{{'amt'+i}}" disabled #amount/>
+                </td>
+                <td>
+                  <input type="date" style="width:130px;" [attr.disabled]="released ? 'disabled' : null" name="{{'itemExpiryDate'+i}}" [ngModel] ="list.itemExpiryDate | date: 'yyyy-MM-dd'" (ngModelChange)="list.itemExpiryDate = $event" #itemExpiryDate="ngModel"  min="{{minDate}}">
+                </td>
+            </tr> 
+          </tbody>
+        </table>
+      </div>
+      <!-- /boxs body -->
+    </div>
+    <div class="clearfix"></div>
+    <div class="form-row">
+      <div class="form-group " style="margin-left:350px">
+        <button type="button" class="btn btn-raised btn-success" data-toggle="tooltip" title="Click here" *ngIf="!released" (click)="submitData(listToEdit)">Submit</button>
+        <a routerLink="/GRN">
+          <button type="button" class="btn btn-raised btn-warning" data-toggle="tooltip" title="Click here">Back</button>
+        </a>
+      </div>
+    </div>
+  </form>
+</div>
+</div>
+
+<!-- Add Product  modal -->
+<div id="myModal" class="modal fade " style=" position: fixed; top: 0;right: 0; bottom: 0;width: 125%" role="dialog">
+<div class="modal-dialog modal-lg" style=" border-radius: 10px">
+  <!-- Modal content-->
+  <div class="modal-content" style="height: 100%;width:125%;margin-left:-29%">
+    <div class="modal-header" style="background-color: #f3903f;">
+      <!-- <button type="button" class="close" data-dismiss="modal">×</button> -->
+      <h4 class="modal-title">Add Product</h4>
+    </div>
+    <div class="modal-body" style="width: 100%">
+      <form #f1="ngForm">
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label >Name</label>
+            <input #name1="ngModel" [(ngModel)]="data2.name1" name="name1" type="text" class="form-control" (keyup)="searchevent()" id="{{searchResultId}}" value="{{searchresult}}" autocomplete="off" required>
+            <div *ngIf="name1.invalid &&(name1.dirty || name1.touched)">
+              <div *ngIf="name1.errors.required" style="color:red;font-size:12px;">
+                Name is required
+              </div> 
+            </div>
+            <div *ngIf="searched" class="autosearch" style="background-color:white;position:absolute;z-index:200;width:98%">
+              <ng-container *ngFor="let result of listOfSearch"> 
+                <label *ngIf="searched" (click)="searchevent1($event)" attr.id="{{result.id}}">{{result.name}}</label>
+                <br/>
+              </ng-container>
+            </div>
+          </div>
+          <div class="form-group col-md-6">
+            <button type="submit" class="btn btn-raised btn-success" (click)="searchList(name1.value);f1.reset();">Search</button>
+            <button type="reset" class="btn btn-raised btn-warning">Reset</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="table-responsive" style="width:880px;background-color:white;" *ngIf="searchedValue">
+      <table class="table mb-0 table-striped" id="myTable" style="margin-left:8px;width:50%">
+        <thead>
+          <tr class=" bg-lightgray">
+            <th>
+              <input type="checkbox" [(checked)]="abbs" (click)="checkbox($event)">
+            </th>
+            <th class="text-darkgray">HSN</th>
+            <th class="text-darkgray">Name</th>
+            <th class="text-darkgray">MRP</th>
+            <th class="text-darkgray">Quantity</th>
+            <th class="text-darkgray">Exp. Date</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="search.length === 0">
+          <tr>
+            <td colspan="8" style="text-align:center">No Record Found....</td>
+          </tr>
+        </tbody>
+        <tbody>
+          <tr *ngFor="let data of search">
+            <td>
+              <input type="checkbox" style="margin-left:5%" (click)="singlecheck($event,data.id)" [(checked)]="checkvalue" />
+            </td>
+            <td>{{data.hsnCode}}</td>
+            <td>{{data.name}}</td>
+            <td>{{data.price}}</td>
+            <td>
+              <input type="number" name="data.quantity" [(ngModel)]="data.quantity"  min=0 oninput="validity.valid||(value='');">
+            </td>
+            <td>
+              <input type="date" id="{{'expiry'+i}}" name="{{'data.itemExpiryDate'+i}}" [(ngModel)]="data.itemExpiryDate" #itemExpiryDate="ngModel" min="{{minDate}}" required>
+              <div *ngIf="itemExpiryDate.invalid &&(itemExpiryDate.dirty || itemExpiryDate.touched)">
+                <div *ngIf="itemExpiryDate.errors.required"  style="color:red;font-size:12px;">
+                  Expiry Date is required
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+        <button class="btn btn-raised btn-success" style="position: fixed;left:32%;top: 200px;" (click)="goselect(search)">>></button>
+      </table>
+      <table id="my_table" class="table mb-0 table-striped" *ngIf="select" style="margin-right:-18%;float:right;top:20%;width:45%">
+        <thead>
+          <tr class=" bg-lightgray">
+            <th class="text-darkgray">HSN</th>
+            <th class="text-darkgray">Name</th>
+            <th class="text-darkgray">MRP</th>
+            <th class="text-darkgray">Quantity</th> 
+            <th class="text-darkgray">Exp. Date</th>
+            <th class="text-darkgray">Action</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="showData">
+          <tr *ngFor="let data of selectedfinallist;let i=index;">
+            <td>{{data.hsnCode}}</td>
+            <td>{{data.name}}</td>
+            <td>{{data.price}}</td>
+            <td>{{data.quantity}}</td>
+            <td>{{data.itemExpiryDate}}</td>
+            <td>
+              <a (click)="delete(data.id)">
+                <i class="fa fa-trash" style="color: red" aria-hidden="true"></i>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-raised btn-success" (click)="addItem(selectedfinallist)" data-dismiss="modal" style="margin-left: 83%;margin-bottom:-5%;margin-right:100%;">Submit</button>
+      <button type="button" class="btn btn-raised btn-info" data-dismiss="modal" (click)="cancelButton()">Close</button>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- Footer-->
+<ul class="footer" style="position:fixed; margin-top: 1%">
+  <li class="pull-left">Copyright &copy; 2018 Limitless Mobility Solutitons Pvt Ltd. All rights reserved.</li>
+  <li class="pull-right" style=" margin-left: 570px;">Powered by <a href="http://zoneonedigital.com/" target="_blank">Zone One Digital</a></li>
+</ul>
+
+
+<ngx-spinner
+bdColor = "rgba(51, 51, 51, 0.8)"
+size = "medium"
+color = "#f3903f"
+type = "ball-triangle-path"
+></ngx-spinner> 

@@ -1,0 +1,43 @@
+
+
+    <!-- bradcome -->
+  
+    <div class="row">
+      <div class="col-sm-6 col-xs-12">
+        <h1 class="h3 m-0">Dashboard</h1>
+        <small class="text-muted breadcrumb"> Dashboard » <a routerLink="/Dashboard">Dashboard</a></small>
+        <br>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+    
+    
+
+
+    <!-- /row -->
+    <div class="boxs">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="boxs-body">
+            
+            <app-chart [chartName]="chartData.ib" [chartData]="chartData.ibStatus"></app-chart>
+            <app-chart [chartName]="chartData.ob" [chartData]="chartData.obStatus"></app-chart>
+          </div>
+          <!-- /boxs body -->
+        </div>
+      </div>
+    </div>
+ 
+
+  <!--Footer-->
+  <ul class="footer" style="position:fixed; margin-top: 20%">
+    <li class="pull-left">Copyright &copy; 2018 Limitless Mobility Solutitons Pvt Ltd. All rights reserved.</li>
+    <li class="pull-right" style="margin-left: 568px">Powered by <a href="http://zoneonedigital.com/" target="_blank">Zone One Digital</a></li>
+  </ul>
+  
+  <ngx-spinner
+  bdColor = "rgba(51, 51, 51, 0.8)"
+  size = "medium"
+  color = "#f3903f"
+  type = "ball-triangle-path"
+  ></ngx-spinner>
